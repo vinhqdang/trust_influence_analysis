@@ -1,0 +1,27 @@
+C:\Users\score\Downloads\ztree-3_4_7\zTreeTestEnvironment\datafiles\150417_1125.sbj
+Subject	1	2	3	4
+client	client1	client2	client3	client4
+birth_year	1995	1988	1988	1993
+major	CS	mechatronics	Banking	Bachelor
+receive_back_most	Game 2 (Partner Identity Game)	Game 1 (Simple Game)	No idea / Do not remember	Game 1 (Simple Game)
+best_personal	Game 2 (Partner Identity Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 2 (Partner Identity Game)
+worst_personal	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)
+reason_personal		I rememeber that I received more than I sent 		At the end of the game, players give almost 0 money. Because they can't trust anymore.
+best_total	Game 2 (Partner Identity Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 2 (Partner Identity Game)
+worst_total	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)
+reason_total		you remembered person and amount that you received each turn in game 4, if you received small amount, you will sent back to him less 		At the beginning; players try to make a trust relationship to earn money
+send_more_for_profit	  2	  3	  2	  4
+send_less_for_profit	  2	  3	  5	  2
+trust_help_receiver	  4	  4	  3	  4
+show_id_help	  5	  4	  2	  4
+show_score_help	  4	  4	  1	  3
+show_combine_help	  4	  4	  1	  3
+trust_help_sender	  4	  4	  1	  3
+identity_help_decide	  4	  4	  2	  4
+trust_score_help_decide	  3	  4	  1	  4
+combine_help_decide	  4	  4	  1	  4
+important_factor	Identity	Identity	Trust score	Identity
+reason_important_factor				
+partner_fair	  3	  3	  4	  3
+partner_comment				At the beginning yes, at the end no
+comment_overall		game has long waiting time :)		good experience 

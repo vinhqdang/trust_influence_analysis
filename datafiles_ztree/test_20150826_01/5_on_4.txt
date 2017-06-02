@@ -1,0 +1,3 @@
+"showing_trust_score"	"send_proportion"
+"46"	0.5	0.8
+"88"	0.59	0.80952380952381

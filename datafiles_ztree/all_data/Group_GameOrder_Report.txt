@@ -1,0 +1,447 @@
+[1] “Parameter: AbsSending + Z_score”
+[1] "ANOVA 2-ways Analysis in wide format for type:  Sender"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                        SS num Df Error SS den Df      F    Pr(>F)    
+(Intercept)          0.000      1   23.642     25 0.0000 1.0000000    
+Groupbtw            28.173      4   23.642     25 7.4479 0.0004288 ***
+game_order           1.397      3   38.023     75 0.9185 0.4361558    
+Groupbtw:game_order 28.765     12   38.023     75 4.7282 1.075e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic p-value
+game_order                 0.54034 0.01228
+Groupbtw:game_order        0.54034 0.01228
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])    
+game_order          0.71032  0.4106724    
+Groupbtw:game_order 0.71032  0.0001557 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                       HF eps   Pr(>F[HF])
+game_order          0.7784227 0.4176762205
+Groupbtw:game_order 0.7784227 0.0000827138
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Receiver"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                        SS num Df Error SS den Df      F   Pr(>F)    
+(Intercept)          0.000      1   32.691     25 0.0000  1.00000    
+Groupbtw            15.427      4   32.691     25 2.9494  0.03991 *  
+game_order           0.448      3   32.425     75 0.3453  0.79262    
+Groupbtw:game_order 39.009     12   32.425     75 7.5190 6.73e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic p-value
+game_order                 0.62213 0.04666
+Groupbtw:game_order        0.62213 0.04666
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])    
+game_order          0.74479     0.7329    
+Groupbtw:game_order 0.74479   4.33e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                       HF eps   Pr(>F[HF])
+game_order          0.8213206 7.530574e-01
+Groupbtw:game_order 0.8213206 1.237461e-07
+
+
+
+
+[1] "Parameter: Absolute Sending"
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Sender"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                        SS num Df Error SS den Df        F    Pr(>F)    
+(Intercept)         425187      1    29612     25 358.9637 2.414e-16 ***
+Groupbtw             33661      4    29612     25   7.1045 0.0005779 ***
+game_order            1834      3    37654     75   1.2175 0.3092990    
+Groupbtw:game_order  29252     12    37654     75   4.8554 7.484e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic  p-value
+game_order                 0.54955 0.014464
+Groupbtw:game_order        0.54955 0.014464
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])    
+game_order          0.72464  0.3061572    
+Groupbtw:game_order 0.72464  0.0001043 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                       HF eps   Pr(>F[HF])
+game_order          0.7961901 0.3075495644
+Groupbtw:game_order 0.7961901 0.0000524135
+[1] ""
+[1] ""
+[1] "Parameter: Absolute Sending"
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Receiver"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                        SS num Df Error SS den Df        F    Pr(>F)    
+(Intercept)         730548      1   118680     25 153.8903 3.513e-12 ***
+Groupbtw             56882      4   118680     25   2.9955   0.03781 *  
+game_order            1237      3   100604     75   0.3074   0.81992    
+Groupbtw:game_order 126232     12   100604     75   7.8421 3.085e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic  p-value
+game_order                 0.55229 0.015174
+Groupbtw:game_order        0.55229 0.015174
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])    
+game_order          0.70272     0.7479    
+Groupbtw:game_order 0.70272  4.959e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                      HF eps   Pr(>F[HF])
+game_order          0.769014 7.669314e-01
+Groupbtw:game_order 0.769014 1.590125e-07
+
+
+
+
+
+
+
+[1] "Parameter: Relative Sending"
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Sender"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                         SS num Df Error SS den Df         F    Pr(>F)    
+(Intercept)         19.7974      1  0.27388     25 1807.0951 < 2.2e-16 ***
+Groupbtw             0.0953      4  0.27388     25    2.1756   0.10107    
+game_order           0.0667      3  0.60272     75    2.7657   0.04767 *  
+Groupbtw:game_order  1.2921     12  0.60272     75   13.3983 3.148e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic  p-value
+game_order                 0.58184 0.024976
+Groupbtw:game_order        0.58184 0.024976
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])    
+game_order          0.71994    0.06786 .  
+Groupbtw:game_order 0.71994  8.821e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                       HF eps   Pr(>F[HF])
+game_order          0.7903488 6.207883e-02
+Groupbtw:game_order 0.7903488 1.193330e-11
+[1] ""
+[1] ""
+[1] "Parameter: Relative Sending"
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Receiver"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                         SS num Df Error SS den Df         F    Pr(>F)    
+(Intercept)         26.8231      1  0.30346     25 2209.7869 < 2.2e-16 ***
+Groupbtw             2.2779      4  0.30346     25   46.9159 2.873e-11 ***
+game_order           0.1485      3  0.65016     75    5.7095  0.001417 ** 
+Groupbtw:game_order  1.7325     12  0.65016     75   16.6549 < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic p-value
+game_order                 0.76618 0.27685
+Groupbtw:game_order        0.76618 0.27685
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])    
+game_order          0.86507   0.002506 ** 
+Groupbtw:game_order 0.86507  1.281e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                       HF eps   Pr(>F[HF])
+game_order          0.9741279 1.580222e-03
+Groupbtw:game_order 0.9741279 3.254771e-16
+
+
+
+
+
+
+
+[1] "Parameter: Relative Sending with Z_score"
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Sender"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                        SS num Df Error SS den Df       F  Pr(>F)    
+(Intercept)          0.000      1   13.947     25  0.0000 1.00000    
+Groupbtw             5.993      4   13.947     25  2.6856 0.05455 .  
+game_order           3.278      3   25.942     75  3.1592 0.02951 *  
+Groupbtw:game_order 70.840     12   25.942     75 17.0670 < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic  p-value
+game_order                 0.61266 0.040507
+Groupbtw:game_order        0.61266 0.040507
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])    
+game_order          0.73532    0.04558 *  
+Groupbtw:game_order 0.73532  6.385e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                       HF eps   Pr(>F[HF])
+game_order          0.8094941 4.032829e-02
+Groupbtw:game_order 0.8094941 4.978005e-14
+[1] ""
+[1] ""
+[1] "Parameter: Relative Sending with Z_score"
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Receiver"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                        SS num Df Error SS den Df      F    Pr(>F)    
+(Intercept)          0.000      1   8.6912     25  0.000  1.000000    
+Groupbtw            50.902      4   8.6912     25 36.605 4.129e-10 ***
+game_order           3.591      3  15.6151     75  5.750  0.001352 ** 
+Groupbtw:game_order 41.200     12  15.6151     75 16.491 < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic p-value
+game_order                 0.80717 0.40632
+Groupbtw:game_order        0.80717 0.40632
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])    
+game_order          0.88648   0.002194 ** 
+Groupbtw:game_order 0.88648  7.822e-15 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                     HF eps   Pr(>F[HF])
+game_order          1.00185 1.352046e-03
+Groupbtw:game_order 1.00185 1.762474e-16
+
+
+
+
+
+[1] "Parameter: Game Profit"
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Sender"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                         SS num Df Error SS den Df       F    Pr(>F)    
+(Intercept)         3656124      1   292497     25 312.493 1.216e-15 ***
+Groupbtw             289829      4   292497     25   6.193   0.00132 ** 
+game_order             4795      3   471988     75   0.254   0.85828    
+Groupbtw:game_order  810258     12   471988     75  10.729 5.213e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic p-value
+game_order                  0.8415 0.53631
+Groupbtw:game_order         0.8415 0.53631
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])    
+game_order          0.89196     0.8366    
+Groupbtw:game_order 0.89196  6.442e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                      HF eps   Pr(>F[HF])
+game_order          1.008965 8.582839e-01
+Groupbtw:game_order 1.008965 5.212622e-12
+[1] ""
+[1] ""
+[1] "Parameter: Game Profit"
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Receiver"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                         SS num Df Error SS den Df        F    Pr(>F)    
+(Intercept)         1213236      1    50688     25 598.3854 < 2.2e-16 ***
+Groupbtw             104060      4    50688     25  12.8310 8.211e-06 ***
+game_order             9566      3    91644     75   2.6096   0.05767 .  
+Groupbtw:game_order   34417     12    91644     75   2.3472   0.01286 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic p-value
+game_order                 0.58038 0.02439
+Groupbtw:game_order        0.58038 0.02439
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])  
+game_order          0.78431    0.07331 .
+Groupbtw:game_order 0.78431    0.02291 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                      HF eps Pr(>F[HF])
+game_order          0.870997 0.06655807
+Groupbtw:game_order 0.870997 0.01813138
+[1] ""
+[1] ""
+Warning message:
+In summary.Anova.mlm(AnovaSPFpq, multivariate = FALSE, univariate = TRUE) :
+  HF eps > 1 treated as 1
+
+
+
+[1] "Parameter: Game Profit with Z_score"
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Sender"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                        SS num Df Error SS den Df       F    Pr(>F)    
+(Intercept)          0.000      1   16.330     25  0.0000  1.000000    
+Groupbtw            16.742      4   16.330     25  6.4076  0.001082 ** 
+game_order           0.225      3   31.969     75  0.1761  0.912278    
+Groupbtw:game_order 54.733     12   31.969     75 10.7003 5.531e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic p-value
+game_order                 0.74707 0.22721
+Groupbtw:game_order        0.74707 0.22721
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])    
+game_order          0.82492     0.8802    
+Groupbtw:game_order 0.82492  3.231e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                       HF eps   Pr(>F[HF])
+game_order          0.9225755 8.994527e-01
+Groupbtw:game_order 0.9225755 3.335431e-11
+[1] ""
+[1] ""
+[1] "Parameter: Game Profit with Z_score"
+[1] "-------*******--------"
+[1] "ANOVA 2-ways Analysis in wide format for type:  Receiver"
+
+Univariate Type II Repeated-Measures ANOVA Assuming Sphericity
+
+                        SS num Df Error SS den Df       F    Pr(>F)    
+(Intercept)          0.000      1   16.209     25  0.0000   1.00000    
+Groupbtw            45.808      4   16.209     25 17.6635 5.314e-07 ***
+game_order           3.728      3   39.920     75  2.3348   0.08064 .  
+Groupbtw:game_order 14.335     12   39.920     75  2.2443   0.01747 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+                    Test statistic  p-value
+game_order                 0.59552 0.031091
+Groupbtw:game_order        0.59552 0.031091
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+                     GG eps Pr(>F[GG])  
+game_order          0.78205    0.09725 .
+Groupbtw:game_order 0.78205    0.02955 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+                       HF eps Pr(>F[HF])
+game_order          0.8681309 0.09032036
+Groupbtw:game_order 0.8681309 0.02397010

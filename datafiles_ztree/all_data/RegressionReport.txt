@@ -1,0 +1,295 @@
+[1] "Linear regression of sending on trust value for type:  SENDER"
+
+Call:
+lm(formula = RelSend ~ showing_trust, data = df_simple)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.93465 -0.31833  0.05839  0.34885  0.62083 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)  
+(Intercept)    -0.6500     0.2547  -2.552   0.0165 *
+showing_trust   1.5482     0.7614   2.033   0.0516 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4185 on 28 degrees of freedom
+Multiple R-squared:  0.1287,	Adjusted R-squared:  0.09754 
+F-statistic: 4.134 on 1 and 28 DF,  p-value: 0.0516
+
+
+Call:
+lm(formula = AbsSend ~ showing_trust, data = df_simple)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.4154 -1.4484 -0.7111  1.2648  5.7513 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)
+(Intercept)      1.620      1.351   1.199    0.241
+showing_trust    4.427      4.039   1.096    0.282
+
+Residual standard error: 2.22 on 28 degrees of freedom
+Multiple R-squared:  0.04115,	Adjusted R-squared:  0.006903 
+F-statistic: 1.202 on 1 and 28 DF,  p-value: 0.2823
+
+
+Call:
+lm(formula = RelSend ~ showing_trust, data = df_id)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.24024 -0.05275  0.09231  0.14039  0.23518 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)
+(Intercept)     0.1012     0.3922   0.258    0.798
+showing_trust   0.4394     0.8528   0.515    0.610
+
+Residual standard error: 0.2745 on 28 degrees of freedom
+Multiple R-squared:  0.009391,	Adjusted R-squared:  -0.02599 
+F-statistic: 0.2654 on 1 and 28 DF,  p-value: 0.6104
+
+
+Call:
+lm(formula = AbsSend ~ showing_trust, data = df_id)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-5.0049 -0.9113 -0.0225  1.1572  4.6573 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)
+(Intercept)      4.376      2.921   1.498    0.145
+showing_trust    2.076      6.351   0.327    0.746
+
+Residual standard error: 2.044 on 28 degrees of freedom
+Multiple R-squared:  0.0038,	Adjusted R-squared:  -0.03178 
+F-statistic: 0.1068 on 1 and 28 DF,  p-value: 0.7462
+
+
+Call:
+lm(formula = RelSend ~ showing_trust, data = df_score)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.43236 -0.08906  0.05041  0.14224  0.35358 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)   
+(Intercept)    -0.3410     0.2154  -1.583  0.12468   
+showing_trust   1.3404     0.4561   2.939  0.00653 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2113 on 28 degrees of freedom
+Multiple R-squared:  0.2358,	Adjusted R-squared:  0.2085 
+F-statistic: 8.638 on 1 and 28 DF,  p-value: 0.006529
+
+
+Call:
+lm(formula = AbsSend ~ showing_trust, data = df_score)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.3749 -0.8762  0.0963  0.7132  2.9044 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     -5.458      1.492  -3.659  0.00104 ** 
+showing_trust   23.443      3.159   7.421 4.41e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.464 on 28 degrees of freedom
+Multiple R-squared:  0.663,	Adjusted R-squared:  0.6509 
+F-statistic: 55.07 on 1 and 28 DF,  p-value: 4.409e-08
+
+
+Call:
+lm(formula = RelSend ~ showing_trust, data = df_combine)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.63516 -0.12146  0.02643  0.17364  0.32312 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    -0.6605     0.2216  -2.981 0.005891 ** 
+showing_trust   2.0500     0.4668   4.392 0.000146 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2357 on 28 degrees of freedom
+Multiple R-squared:  0.4079,	Adjusted R-squared:  0.3868 
+F-statistic: 19.29 on 1 and 28 DF,  p-value: 0.0001458
+
+
+Call:
+lm(formula = AbsSend ~ showing_trust, data = df_combine)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.1228 -1.0108  0.2139  0.8095  3.1587 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     -5.072      1.557  -3.259  0.00293 ** 
+showing_trust   22.682      3.279   6.918 1.61e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.656 on 28 degrees of freedom
+Multiple R-squared:  0.6309,	Adjusted R-squared:  0.6177 
+F-statistic: 47.86 on 1 and 28 DF,  p-value: 1.609e-07
+
+[1] "Linear regression of sending on trust value for type:  RECEIVER"
+
+Call:
+lm(formula = RelSend ~ showing_trust, data = df_simple)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.1685 -0.1483  0.1705  0.2331  0.4126 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)   
+(Intercept)    -0.4551     0.1779  -2.559  0.01313 * 
+showing_trust   1.6410     0.5309   3.091  0.00306 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3729 on 58 degrees of freedom
+Multiple R-squared:  0.1414,	Adjusted R-squared:  0.1266 
+F-statistic: 9.554 on 1 and 58 DF,  p-value: 0.003064
+
+
+Call:
+lm(formula = AbsSend ~ showing_trust, data = df_simple)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.2807 -1.3972 -0.4609  1.3946  6.1385 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)  
+(Intercept)     0.7171     1.0184   0.704   0.4842  
+showing_trust   6.1880     3.0401   2.035   0.0464 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.135 on 58 degrees of freedom
+Multiple R-squared:  0.06667,	Adjusted R-squared:  0.05058 
+F-statistic: 4.143 on 1 and 58 DF,  p-value: 0.04638
+
+
+Call:
+lm(formula = RelSend ~ showing_trust, data = df_id)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.38043 -0.05387  0.02052  0.11844  0.30492 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)
+(Intercept)    0.09211    0.25113   0.367    0.715
+showing_trust  0.71384    0.55260   1.292    0.202
+
+Residual standard error: 0.2386 on 58 degrees of freedom
+Multiple R-squared:  0.02797,	Adjusted R-squared:  0.01121 
+F-statistic: 1.669 on 1 and 58 DF,  p-value: 0.2016
+
+
+Call:
+lm(formula = AbsSend ~ showing_trust, data = df_id)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.6806 -1.5855 -0.1572  1.8242  8.1006 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)
+(Intercept)      1.670      3.144   0.531    0.597
+showing_trust   10.130      6.919   1.464    0.149
+
+Residual standard error: 2.987 on 58 degrees of freedom
+Multiple R-squared:  0.03565,	Adjusted R-squared:  0.01902 
+F-statistic: 2.144 on 1 and 58 DF,  p-value: 0.1485
+
+
+Call:
+lm(formula = RelSend ~ showing_trust, data = df_score)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.5674 -0.1224  0.0282  0.1596  0.3913 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    -0.2643     0.1744  -1.516 0.135008    
+showing_trust   1.4743     0.3803   3.876 0.000273 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2293 on 58 degrees of freedom
+Multiple R-squared:  0.2058,	Adjusted R-squared:  0.1921 
+F-statistic: 15.03 on 1 and 58 DF,  p-value: 0.0002726
+
+
+Call:
+lm(formula = AbsSend ~ showing_trust, data = df_score)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.7062 -1.8248 -0.5112  1.8186  9.6952 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     -5.524      2.288  -2.415   0.0189 *  
+showing_trust   26.284      4.989   5.268 2.11e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.007 on 58 degrees of freedom
+Multiple R-squared:  0.3237,	Adjusted R-squared:  0.312 
+F-statistic: 27.75 on 1 and 58 DF,  p-value: 2.11e-06
+
+
+Call:
+lm(formula = RelSend ~ showing_trust, data = df_combine)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.76987 -0.11243  0.06707  0.14268  0.29142 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    -0.5357     0.1557  -3.441  0.00108 ** 
+showing_trust   2.0856     0.3348   6.230 5.69e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2285 on 58 degrees of freedom
+Multiple R-squared:  0.4009,	Adjusted R-squared:  0.3905 
+F-statistic: 38.81 on 1 and 58 DF,  p-value: 5.685e-08
+
+
+Call:
+lm(formula = AbsSend ~ showing_trust, data = df_combine)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.7956 -1.5620 -0.4483  1.3085  9.1050 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     -5.638      1.981  -2.845  0.00612 ** 
+showing_trust   26.931      4.261   6.320 4.02e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.909 on 58 degrees of freedom
+Multiple R-squared:  0.4078,	Adjusted R-squared:  0.3976 
+F-statistic: 39.94 on 1 and 58 DF,  p-value: 4.024e-08

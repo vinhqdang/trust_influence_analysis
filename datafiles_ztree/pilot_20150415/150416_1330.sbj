@@ -1,0 +1,27 @@
+C:\Users\score\Downloads\ztree-3_4_7\zTreeTestEnvironment\datafiles\150416_1330.sbj
+Subject	1	2	3	4
+client	claudia1	claudia2	vinh1	vinh2
+birth_year	1976	1976	1991	1987
+major	computer science	computer science	Econ	Computer Science
+receive_back_most	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 3 (Partner Information Game)
+best_personal	Game 1 (Simple Game)	No idea / Do not remember	Game 3 (Partner Information Game)	Game 3 (Partner Information Game)
+worst_personal	Game 4 (Partner Identity and Information Game)	No idea / Do not remember	Game 4 (Partner Identity and Information Game)	Game 1 (Simple Game)
+reason_personal				
+best_total	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 3 (Partner Information Game)
+worst_total	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 1 (Simple Game)	Game 2 (Partner Identity Game)
+reason_total			Trust score helps but identity do not	
+send_more_for_profit	  2	  2	  4	  4
+send_less_for_profit	  3	  4	  2	  1
+trust_help_receiver	  4	  4	  4	  5
+show_id_help	  2	  2	  2	  2
+show_score_help	  5	  5	  4	  5
+show_combine_help	  5	  5	  4	  4
+trust_help_sender	  5	  4	  5	  4
+identity_help_decide	  2	  2	  2	  3
+trust_score_help_decide	  5	  5	  5	  4
+combine_help_decide	  5	  5	  5	  5
+important_factor	Trust score	Trust score	Trust score	Trust score
+reason_important_factor				
+partner_fair	  2	  2	  2	  3
+partner_comment	he knew the game :-)	he knew the game :-)		Yes, sometimes they are fair
+comment_overall	no	no		Good experiment

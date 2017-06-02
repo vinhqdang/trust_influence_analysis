@@ -1,0 +1,350 @@
+[1] "Correlation for type:  SENDER"
+
+	Pearson's product-moment correlation
+
+data:  df_simple$AbsSend and df_simple$showing_trust
+t = 1.0962, df = 28, p-value = 0.2823
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.1698304  0.5247689
+sample estimates:
+      cor 
+0.2028502 
+
+
+	Pearson's product-moment correlation
+
+data:  df_id$AbsSend and df_id$showing_trust
+t = 0.3268, df = 28, p-value = 0.7462
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3054096  0.4127452
+sample estimates:
+       cor 
+0.06164212 
+
+
+	Pearson's product-moment correlation
+
+data:  df_score$AbsSend and df_score$showing_trust
+t = 7.4212, df = 28, p-value = 4.409e-08
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.6423865 0.9081063
+sample estimates:
+      cor 
+0.8142193 
+
+
+	Pearson's product-moment correlation
+
+data:  df_combine$AbsSend and df_combine$showing_trust
+t = 6.9181, df = 28, p-value = 1.609e-07
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.6080087 0.8976811
+sample estimates:
+     cor 
+0.794291 
+
+
+	Pearson's product-moment correlation
+
+data:  df_simple$RelSend and df_simple$showing_trust
+t = 2.0333, df = 28, p-value = 0.0516
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.00181895  0.63668059
+sample estimates:
+      cor 
+0.3586853 
+
+
+	Pearson's product-moment correlation
+
+data:  df_id$RelSend and df_id$showing_trust
+t = 0.51522, df = 28, p-value = 0.6104
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2728883  0.4417545
+sample estimates:
+       cor 
+0.09690834 
+
+
+	Pearson's product-moment correlation
+
+data:  df_score$RelSend and df_score$showing_trust
+t = 2.939, df = 28, p-value = 0.006529
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.1518423 0.7198898
+sample estimates:
+    cor 
+0.48555 
+
+
+	Pearson's product-moment correlation
+
+data:  df_combine$RelSend and df_combine$showing_trust
+t = 4.392, df = 28, p-value = 0.0001458
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.3616080 0.8120861
+sample estimates:
+      cor 
+0.6386733 
+
+
+  Results of a comparison of two correlations based on independent groups
+
+Comparison between r1.jk (AbsSend, showing_trust) = 0.2029 and r2.hm (AbsSend, showing_trust) = 0.0616
+Difference: r1.jk - r2.hm = 0.1412
+Data: list(df_simple, df_id): j = AbsSend, k = showing_trust, h = AbsSend, m = showing_trust
+Group sizes: n1 = 30, n2 = 30
+Null hypothesis: r1.jk is equal to r2.hm
+Alternative hypothesis: r1.jk is not equal to r2.hm (two-sided)
+Alpha: 0.05
+
+fisher1925: Fisher's z (1925)
+  z = 0.5290, p-value = 0.5968
+  Null hypothesis retained
+
+zou2007: Zou's (2007) confidence interval
+  95% confidence interval for r1.jk - r2.hm: -0.3708 0.6294
+  Null hypothesis retained (Interval includes 0)
+
+
+  Results of a comparison of two correlations based on independent groups
+
+Comparison between r1.jk (RelSend, showing_trust) = 0.3587 and r2.hm (RelSend, showing_trust) = 0.0969
+Difference: r1.jk - r2.hm = 0.2618
+Data: list(df_simple, df_id): j = RelSend, k = showing_trust, h = RelSend, m = showing_trust
+Group sizes: n1 = 30, n2 = 30
+Null hypothesis: r1.jk is equal to r2.hm
+Alternative hypothesis: r1.jk is not equal to r2.hm (two-sided)
+Alpha: 0.05
+
+fisher1925: Fisher's z (1925)
+  z = 1.0220, p-value = 0.3068
+  Null hypothesis retained
+
+zou2007: Zou's (2007) confidence interval
+  95% confidence interval for r1.jk - r2.hm: -0.2371 0.7244
+  Null hypothesis retained (Interval includes 0)
+
+
+  Results of a comparison of two correlations based on independent groups
+
+Comparison between r1.jk (AbsSend, showing_trust) = 0.8142 and r2.hm (AbsSend, showing_trust) = 0.7943
+Difference: r1.jk - r2.hm = 0.0199
+Data: list(df_score, df_combine): j = AbsSend, k = showing_trust, h = AbsSend, m = showing_trust
+Group sizes: n1 = 30, n2 = 30
+Null hypothesis: r1.jk is equal to r2.hm
+Alternative hypothesis: r1.jk is not equal to r2.hm (two-sided)
+Alpha: 0.05
+
+fisher1925: Fisher's z (1925)
+  z = 0.2075, p-value = 0.8356
+  Null hypothesis retained
+
+zou2007: Zou's (2007) confidence interval
+  95% confidence interval for r1.jk - r2.hm: -0.1806 0.2285
+  Null hypothesis retained (Interval includes 0)
+
+
+  Results of a comparison of two correlations based on independent groups
+
+Comparison between r1.jk (RelSend, showing_trust) = 0.4855 and r2.hm (RelSend, showing_trust) = 0.6387
+Difference: r1.jk - r2.hm = -0.1531
+Data: list(df_score, df_combine): j = RelSend, k = showing_trust, h = RelSend, m = showing_trust
+Group sizes: n1 = 30, n2 = 30
+Null hypothesis: r1.jk is equal to r2.hm
+Alternative hypothesis: r1.jk is not equal to r2.hm (two-sided)
+Alpha: 0.05
+
+fisher1925: Fisher's z (1925)
+  z = -0.8293, p-value = 0.4069
+  Null hypothesis retained
+
+zou2007: Zou's (2007) confidence interval
+  95% confidence interval for r1.jk - r2.hm: -0.5292 0.2098
+  Null hypothesis retained (Interval includes 0)
+
+[1] ""
+[1] "*****"
+[1] "Correlation for type:  RECEIVER"
+
+	Pearson's product-moment correlation
+
+data:  df_simple$AbsSend and df_simple$showing_trust
+t = 2.0355, df = 58, p-value = 0.04638
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.004586275 0.480622498
+sample estimates:
+      cor 
+0.2582103 
+
+
+	Pearson's product-moment correlation
+
+data:  df_id$AbsSend and df_id$showing_trust
+t = 1.4642, df = 58, p-value = 0.1485
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.06840193  0.42247279
+sample estimates:
+      cor 
+0.1888021 
+
+
+	Pearson's product-moment correlation
+
+data:  df_score$AbsSend and df_score$showing_trust
+t = 5.2683, df = 58, p-value = 2.11e-06
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.3681642 0.7189678
+sample estimates:
+      cor 
+0.5689044 
+
+
+	Pearson's product-moment correlation
+
+data:  df_combine$AbsSend and df_combine$showing_trust
+t = 6.3198, df = 58, p-value = 4.024e-08
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.4591189 0.7679868
+sample estimates:
+      cor 
+0.6385951 
+
+
+	Pearson's product-moment correlation
+
+data:  df_simple$RelSend and df_simple$showing_trust
+t = 3.0909, df = 58, p-value = 0.003064
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.1350383 0.5750767
+sample estimates:
+      cor 
+0.3760678 
+
+
+	Pearson's product-moment correlation
+
+data:  df_id$RelSend and df_id$showing_trust
+t = 1.2918, df = 58, p-value = 0.2016
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.0905384  0.4040001
+sample estimates:
+      cor 
+0.1672309 
+
+
+	Pearson's product-moment correlation
+
+data:  df_score$RelSend and df_score$showing_trust
+t = 3.8765, df = 58, p-value = 0.0002726
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.2256970 0.6344671
+sample estimates:
+      cor 
+0.4536245 
+
+
+	Pearson's product-moment correlation
+
+data:  df_combine$RelSend and df_combine$showing_trust
+t = 6.2295, df = 58, p-value = 5.685e-08
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.4518640 0.7642054
+sample estimates:
+      cor 
+0.6331423 
+
+
+  Results of a comparison of two correlations based on independent groups
+
+Comparison between r1.jk (AbsSend, showing_trust) = 0.2582 and r2.hm (AbsSend, showing_trust) = 0.1888
+Difference: r1.jk - r2.hm = 0.0694
+Data: list(df_simple, df_id): j = AbsSend, k = showing_trust, h = AbsSend, m = showing_trust
+Group sizes: n1 = 60, n2 = 60
+Null hypothesis: r1.jk is equal to r2.hm
+Alternative hypothesis: r1.jk is not equal to r2.hm (two-sided)
+Alpha: 0.05
+
+fisher1925: Fisher's z (1925)
+  z = 0.3902, p-value = 0.6964
+  Null hypothesis retained
+
+zou2007: Zou's (2007) confidence interval
+  95% confidence interval for r1.jk - r2.hm: -0.2754 0.4094
+  Null hypothesis retained (Interval includes 0)
+
+
+  Results of a comparison of two correlations based on independent groups
+
+Comparison between r1.jk (RelSend, showing_trust) = 0.3761 and r2.hm (RelSend, showing_trust) = 0.1672
+Difference: r1.jk - r2.hm = 0.2088
+Data: list(df_simple, df_id): j = RelSend, k = showing_trust, h = RelSend, m = showing_trust
+Group sizes: n1 = 60, n2 = 60
+Null hypothesis: r1.jk is equal to r2.hm
+Alternative hypothesis: r1.jk is not equal to r2.hm (two-sided)
+Alpha: 0.05
+
+fisher1925: Fisher's z (1925)
+  z = 1.2100, p-value = 0.2263
+  Null hypothesis retained
+
+zou2007: Zou's (2007) confidence interval
+  95% confidence interval for r1.jk - r2.hm: -0.1290 0.5345
+  Null hypothesis retained (Interval includes 0)
+
+
+  Results of a comparison of two correlations based on independent groups
+
+Comparison between r1.jk (AbsSend, showing_trust) = 0.5689 and r2.hm (AbsSend, showing_trust) = 0.6386
+Difference: r1.jk - r2.hm = -0.0697
+Data: list(df_score, df_combine): j = AbsSend, k = showing_trust, h = AbsSend, m = showing_trust
+Group sizes: n1 = 60, n2 = 60
+Null hypothesis: r1.jk is equal to r2.hm
+Alternative hypothesis: r1.jk is not equal to r2.hm (two-sided)
+Alpha: 0.05
+
+fisher1925: Fisher's z (1925)
+  z = -0.5867, p-value = 0.5574
+  Null hypothesis retained
+
+zou2007: Zou's (2007) confidence interval
+  95% confidence interval for r1.jk - r2.hm: -0.3085 0.1643
+  Null hypothesis retained (Interval includes 0)
+
+
+  Results of a comparison of two correlations based on independent groups
+
+Comparison between r1.jk (RelSend, showing_trust) = 0.4536 and r2.hm (RelSend, showing_trust) = 0.6331
+Difference: r1.jk - r2.hm = -0.1795
+Data: list(df_score, df_combine): j = RelSend, k = showing_trust, h = RelSend, m = showing_trust
+Group sizes: n1 = 60, n2 = 60
+Null hypothesis: r1.jk is equal to r2.hm
+Alternative hypothesis: r1.jk is not equal to r2.hm (two-sided)
+Alpha: 0.05
+
+fisher1925: Fisher's z (1925)
+  z = -1.3741, p-value = 0.1694
+  Null hypothesis retained
+
+zou2007: Zou's (2007) confidence interval
+  95% confidence interval for r1.jk - r2.hm: -0.4424 0.0765
+  Null hypothesis retained (Interval includes 0)
+
+[1] ""
+[1] "*****"

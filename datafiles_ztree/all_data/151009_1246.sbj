@@ -1,0 +1,29 @@
+C:\Users\quang\Downloads\ztree-3_4_7\151009_1246.sbj
+Subject	1	2	3	4	5	6
+client	client1	client2	client3	client4	client5	client6
+birth_year	1990	1988	1989	1983	1980	1989
+nationality	french	Algerian	algerian	mexican	French	French
+major	computer science	Computer Science	computer science	biomedical engineering	Computer science	Computer Science/Mathematics
+receive_back_most	Game 4 (Partner Identity and Information Game)	Game 2 (Partner Identity Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)
+best_personal	Game 2 (Partner Identity Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)
+worst_personal	Game 4 (Partner Identity and Information Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)
+reason_personal	Just a feeling, sorry.		when we have some information about the parterner we can more efficently make strategy and choose the best paeter for earning more money	For me it was important to know to whom I was sending the money to, and to choose the amount based in the previous experience.	I could see a pattern in the decision stretegy of the players in games 4 and 3. This helps alot;	With the identity, it is more easy to trust someone whereas without any information, someone could be selfish without any punishment in terms of future transaction
+best_total	Game 4 (Partner Identity and Information Game)	Game 2 (Partner Identity Game)	Game 3 (Partner Information Game)	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)
+worst_total	Game 1 (Simple Game)	Game 3 (Partner Information Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 4 (Partner Identity and Information Game)
+reason_total	In game1 we don't know anything about partner.			a) You can base your decisions only on the score when giving money and, at the end because there are no names, people can feel free to change strategie.\r\n\r\nb) People are more reserved and there's no way to know if the other person is paying.		With the information game, we cannot build strong friendship which could be less fruitful for everybody else (let us say that A and B are friends, then they may have no interest to become friend with C). Once friendships are done, the identity game might lead to less risk and, thus, globally involve less profit.
+send_more_for_profit	  1	  4	  2	  2	  1	  2
+send_less_for_profit	  4	  3	  2	  3	  4	  4
+trust_help_receiver	  2	  2	  3	  3	  5	  4
+show_id_help	  3	  4	  4	  5	  5	  5
+show_score_help	  5	  4	  4	  5	  5	  4
+show_combine_help	  4	  5	  5	  5	  5	  5
+trust_score_correctness	  4	  3	  4	  4	  5	  2
+trust_help_sender	  4	  3	  5	  4	  5	  4
+identity_help_decide	  4	  4	  4	  5	  5	  5
+trust_score_help_decide	  5	  3	  4	  4	  4	  4
+combine_help_decide	  3	  4	  5	  5	  5	  5
+important_factor	Trust score	Trust score	Identity	Identity	Trust score	Identity
+reason_important_factor	I think the identity is just a nickname. If the trust score calculation is well choose, it's more interresting than name.	Because I can forgot the identity, and I don't have to memorise every trust level as the last one is computed based on the past ones. So, the trust level is more significant	if we rember the identity we can easly trade with more trusth  	Because you know who is the partner and the relation you have with him, you know if he's trustable and shareful, only the score does not give this information since it's changing every round from the relation with other partners.\r\nNo information about the partner is like beting.		Trust score is not something to which we can emotionally attach ourself
+partner_fair	  4	  3	  3	  3	  4	  2
+partner_comment	Some are selfish, but it's a minority.	Depends on the displaying of the identity and the willingness to earn a maximum of coins (especially at the end of the experiments)	sometimes the partner were not honnest 	I was cheated, i.e., when there was only score showing at the end, those high ranked, changed the strategy and did not give the money back.	3 out 6 were fair. 1 was too rational; almost fair. 2 were unfair  	They rarely made the profit as equal for both. One of them did not even give any profit for any transaction.
+comment_overall	It was fun.	No !	this experiment give us vey interest information about behavior of every partener in different situation, and i hope that you will do more experiment that can help to improve your result 	Nice experiment :)		Not really

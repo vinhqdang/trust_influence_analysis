@@ -1,0 +1,43 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{url}
+\lstset {
+tabsize=2
+}
+\pagestyle{myheadings}
+\graphicspath { {'/'} }
+\begin{document}
+	\author{Quang - Vinh DANG \\ COAST team, Inria Nancy}
+	\title{Technical Report\\ Evaluating delays faced by users in large scale settings using GoogleDocs and MUTE}\maketitle
+
+\section{Measurement}
+
+\cite{R1, R2, R3, R6} measures:
+\begin{itemize}
+	\item How much A \footnote{A: sender, B: receiver} send, what is payoff of A
+	\item How much B send back, what is the proportion, what is payoff of B
+\end{itemize}
+
+They calculate mean and standard deviation for each value then compare.
+
+\cite{R4} measures the percentage of reward between users.
+
+\cite {R5}, which is very close, measure the proportion of sending and sending back, average earning and hazard percentage (i.e, the receiver "betrays" the sender)
+\begin{thebibliography}{99}
+
+\bibitem{R1} Ben-Ner, Avner, and Louis Putterman. "Trust, communication and contracts: An experiment." Journal of Economic Behavior \& Organization 70, no. 1 (2009): 106-121.
+
+\bibitem{R2} Burks, Stephen V., Jeffrey P. Carpenter, and Eric Verhoogen. "Playing both roles in the trust game." Journal of Economic Behavior \& Organization 51, no. 2 (2003): 195-216.
+
+\bibitem{R3} Cox, James C. "How to identify trust and reciprocity." Games and economic behavior 46, no. 2 (2004): 260-281.
+
+\bibitem{R4} Anderhub, Vital, Dirk Engelmann, and Werner Güth. "An experimental study of the repeated trust game with incomplete information." Journal of Economic Behavior \& Organization 48, no. 2 (2002): 197-216. 
+
+\bibitem{R5} Engle-Warnick, Jim, and Robert L. Slonim. "The evolution of strategies in a repeated trust game." Journal of Economic Behavior \& Organization 55, no. 4 (2004): 553-573.
+
+\bibitem{R6} Dubois, Dimitri, Marc Willinger, and Thierry Blayac. "Does players’ identification affect trust and reciprocity in the lab?." Journal of Economic Psychology 33, no. 1 (2012): 303-317.
+\end{thebibliography}	
+\end{document}

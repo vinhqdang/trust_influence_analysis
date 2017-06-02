@@ -1,0 +1,29 @@
+C:\Users\quang\Downloads\ztree-3_4_7\151008_1302.sbj
+Subject	1	2	3	4	5	6
+client	client1	client2	client3	client4	client5	client6
+birth_year	1986	1986	1990	1987	1991	1971
+nationality	Iran	Vietnamese	algerian	Algerian	French	NA
+major	Computer Science	Computer Science	Computer Science	Computer Science	Computer Science	Math
+receive_back_most	Game 4 (Partner Identity and Information Game)	No idea / Do not remember	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)
+best_personal	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)
+worst_personal	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)
+reason_personal	In the Game 1, I had the fear of being cheated. So, i did not trust anybody. but in the others, I felt more comfortable (especially in game 4)			- in the \"Simple game\" the others don't care for their \"reputation\" so they don't investigate more money.\r\n- in the games including trusting informations, the people are more careful about their scores, because they're counted and displayed.	I feel that games 2, 3 and 4 were quite similar, as you could estimate the behaviour of each specific partener. This way, you can play accordingly, maximazing your gain and minimazing your loss.\r\nIn the first game case, with no information, you could not trust anyone and the game ended with only zero echanges.	
+best_total	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)
+worst_total	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)
+reason_total	same reason			same as mine :-)	exactly the same thing as my previous answer.	
+send_more_for_profit	  1	  2	  1	  1	  3	  1
+send_less_for_profit	  3	  2	  4	  5	  3	  5
+trust_help_receiver	  1	  3	  1	  3	  5	  1
+show_id_help	  5	  4	  1	  3	  5	  3
+show_score_help	  4	  3	  1	  5	  5	  5
+show_combine_help	  5	  4	  1	  5	  5	  3
+trust_score_correctness	  4	  3	  1	  5	  3	  3
+trust_help_sender	  5	  3	  3	  5	  1	  5
+identity_help_decide	  5	  4	  2	  1	  5	  4
+trust_score_help_decide	  5	  3	  2	  5	  5	  5
+combine_help_decide	  4	  4	  2	  3	  5	  5
+important_factor	Identity	Identity	Trust score	Trust score	Identity	Trust score
+reason_important_factor	I usually trust on names more.				As I do not know haw the score is computed, I give more trust to identity then to score.	
+partner_fair	  4	  3	  4	  1	  4	  3
+partner_comment	in some cases, they were generous, but some cases mean!				Most of them were fair, I estimate that two of them ware not	'fair' is irrelevant. The goal was to try and win. No fairness involved, since no cheating was possible
+comment_overall	it was very boring. at the end, i just wanted to finish the game without focusing on it.					

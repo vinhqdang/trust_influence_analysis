@@ -1,0 +1,29 @@
+C:\Users\quang\Downloads\ztree-3_4_7\151012_1313.sbj
+Subject	1	2	3	4	5	6
+client	client1	client2	client3	client4	client5	client6
+birth_year	1986	1987	1992	1986	1993	1980
+nationality	Colombian	Tunisian	french	Spanish	French	Austrian
+major	Computer Science	Computer Science	systeme d'information, signal et automatique	Computer Science	Computer Sciences	Computer Science
+receive_back_most	Game 3 (Partner Information Game)	Game 3 (Partner Information Game)	Game 3 (Partner Information Game)	Game 2 (Partner Identity Game)	Game 2 (Partner Identity Game)	Game 4 (Partner Identity and Information Game)
+best_personal	Game 3 (Partner Information Game)	Game 3 (Partner Information Game)	Game 3 (Partner Information Game)	Game 1 (Simple Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)
+worst_personal	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 3 (Partner Information Game)	Game 1 (Simple Game)	Game 1 (Simple Game)
+reason_personal		The absence of the trust score discourage to send much money (there is no garantee to recieve a money in return of the amount sended) 	In game 3, I can manage to increase trust at first, then without them noticing (because their is no name) I can start to no do fair trade.\r\nIn game 1, well I do not know how to react.	With simple game you can be bad (e.g. give a 0) withouth disclosing your identity.	People are cruel want they know nobody can see them	Investing high amounts of money has higher turn outs even though it is riskier. My strategy was to put enough money into the system that everyone will spend more. This works better when the players are known: In the no identity setting, more people just took the money than in a setting with identity. Both name and trust level played a factor for me, the first to judge the behaviour wrt me and the second to judge general behaviour. A reputation of less than 0.1 didn't get any money anymore. Knowing the name helped better keeping track of people who give only 0e.
+best_total	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)
+worst_total	Game 1 (Simple Game)	Game 2 (Partner Identity Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)
+reason_total			The more intell you got the more you can do fair trade...I guess	When knowing the information score of the others, it gets more difficult to be a \"bad guy\".	Relying only on the trust score enable to take more risks and build trust between some pairs, leading to higher profit	The reasons are the same as in the last answer. I still tried to spend more in the no identity setting to see if i could change behaviour.
+send_more_for_profit	  1	  1	  2	  2	  2	  1
+send_less_for_profit	  3	  2	  3	  4	  4	  3
+trust_help_receiver	  5	  3	  2	  2	  5	  4
+show_id_help	  5	  5	  4	  2	  5	  5
+show_score_help	  5	  5	  4	  4	  4	  5
+show_combine_help	  5	  5	  4	  3	  5	  5
+trust_score_correctness	  5	  4	  3	  3	  5	  4
+trust_help_sender	  5	  5	  4	  5	  4	  4
+identity_help_decide	  5	  5	  5	  3	  5	  5
+trust_score_help_decide	  5	  5	  5	  4	  5	  5
+combine_help_decide	  5	  5	  5	  4	  4	  5
+important_factor	Trust score	Trust score	Identity	Trust score	Identity	Identity
+reason_important_factor			If you only add the trust score, well maybe it was only an act.	Trust score could vary depending on the evolution of the game, that's good.	I don't know, but I preferred having only the name	I'd prefer both, but have a slight preference for identity because i can influence other's decisions better.
+partner_fair	  1	  3	  3	  3	  3	  3
+partner_comment		I think there are some partners who were fair and some others try to gain trust of other by sending a big amount of money.	Some seems to try, some other not at all		Some of them were, but a jerk in Partner Identity game costed me a lot of money by sending nothing back more than once.	The selfish people were really selfish, the rest was quite productive to work with.
+comment_overall		Thank you to this enjoying game !	na		Really interesting experiment !	Everything is fine

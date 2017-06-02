@@ -1,0 +1,22 @@
+---
+title: "Analyze Dubois data"
+author: "Vinh Dang"
+date: "24 October 2015"
+output: pdf_document
+---
+
+
+```{r}
+dubois <- read.csv("data_dubois.csv", sep = ";")
+treat0 <- dubois [dubois$treatment == 0,]
+
+sum_group_reciprocity = 0
+for (user in 1:36) {
+  mean_group_reciprocity <- mean (treat0[treat0$player_uid == user,]$sent_back
+                                    /treat0[treat0$player_uid == user,]$received, na.rm = TRUE)
+  # print (paste("Mean of group ", group, " reciprocity is ", mean_group_reciprocity))
+  sum_group_reciprocity = sum_group_reciprocity + mean_group_reciprocity
+}
+
+print (paste("Mean of group reciprocity is: ", (sum_group_reciprocity/36)))
+```

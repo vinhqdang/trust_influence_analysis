@@ -1,0 +1,6 @@
+Username: vpnbook
+Password: 8rubrEsp
+
+/channel ch
+Determines the port used for z-Leaf to establish connection to z-Tree. Default is channel=0. The actual port is 700+"ch"; (7000+"ch" in version 3).
+If you want to run more than one z-Tree on one computer they must work with different channels, i.e., you set the channel to values greater than zero.

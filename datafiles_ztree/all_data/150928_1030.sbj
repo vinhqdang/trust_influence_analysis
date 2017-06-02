@@ -1,0 +1,29 @@
+C:\Users\quang\Downloads\ztree-3_4_7\150928_1030.sbj
+Subject	1	2	3	4	5	6
+client	client1	client2	client3	client4	client5	client6
+birth_year	1991	1996	1981	1984	1993	1996
+nationality	french	Vietnamese	French	French	French	vietnamese
+major	Computer science	Falculte de Science et Technologie	Computer science	Computer Science	Computer Science	Info Com
+receive_back_most	Game 4 (Partner Identity and Information Game)	Game 1 (Simple Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)	Game 1 (Simple Game)
+best_personal	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)
+worst_personal	Game 1 (Simple Game)	Game 4 (Partner Identity and Information Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)
+reason_personal	my strategy was to trust no one in the simple game, i didn t earn much in result	because when im sender, i prefer send 0 eu, i trust no one except me 	I tend to give half of my earnings if the other sends back.\r\nPeople tend to not send back money in simple game. Me neither because of lack of information.\r\nThe more information, the more everyone earns.	The answers seem obvious to me...	Game 1 was blind sending. I would always send at least a little something and rarely ever get something back. Game 4 (almost as much as Game 2) had trust building, which led to being more confident sending a lot to the right people and getting back appropriately.	
+best_total	Game 4 (Partner Identity and Information Game)	No idea / Do not remember	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)
+worst_total	Game 1 (Simple Game)	Game 2 (Partner Identity Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)
+reason_total		Cause its the first game,  i think everybody want to send more money to earn the trust of the others	Same as before. If everyone gives money and share, more money will be created. If people tend to take profit unilaterally people dont give money back. On simple game everyone sent 0.		Same as previous. Nobody would take risk blindly in game 1, the more information the more confidence.	
+send_more_for_profit	  1	  3	  1	  1	  1	  3
+send_less_for_profit	  5	  3	  5	  3	  5	  2
+trust_help_receiver	  1	  5	  1	  5	  5	  2
+show_id_help	  4	  4	  5	  5	  5	  3
+show_score_help	  5	  4	  3	  1	  4	  3
+show_combine_help	  5	  3	  4	  5	  5	  5
+trust_score_correctness	  4	  1	  2	  5	  4	  1
+trust_help_sender	  5	  2	  4	  5	  5	  5
+identity_help_decide	  4	  2	  5	  5	  5	  2
+trust_score_help_decide	  5	  2	  4	  5	  5	  3
+combine_help_decide	  4	  2	  4	  5	  5	  3
+important_factor	Trust score	No Preference	Identity	Trust score	Identity	Trust score
+reason_important_factor	I didn t remenber well who did what , the trust score was easier to use	i never let this score blind my mind, because its just people send you much money to earn higher trust score and in the end, they will lie you until the end when you trust them, they will receive more more money and send less	There are people who will begin to give back money first in order to not give back after. It is difficult for trust score to represent that. If trust score was representing that the algorithm should be known. I think its about the total quantity given back and not the operations.	If there are many participants, it is difficult to keep track of each one's behaviour. The trust score approach seems to scale better.	At some point someone who was barely sending anything back would start sending back 3 when you sent him 1, boosting his trust score. I don't know if that was intentional, but I definitely think the trust score is less reliable	
+partner_fair	  2	  2	  3	  4	  4	  2
+partner_comment	a lot send back half of the money most of the time rather than 2/3\r\nof course, some send back 0\r\n		Its part of the rule so yes.\r\nIf the question is about giving back money at first yes but after simple game almost everyone tend to not send back as they should in a perfect world	One or two partners were not fair.	Some would give nearly nothing back, but those who did sent 2/3 of what they got most of the time, which is the fairest amount, as both the sender and receiver get the same net gain in the end.	well, i think at the beginning, every1 was excited, and they dont know the key to the winning very well. So they just... give as much as they receive ( or even more ). But after, when some one started to '' cheat '' ( i mean give less than how much they receive ), things changed
+comment_overall		u done very well, thank u for experiment. I hope to participate to another test like this.	Need more information on score it should express history of sends back			The game lasted a little bit too long, but cool anyway :)

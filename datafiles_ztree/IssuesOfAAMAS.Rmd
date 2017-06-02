@@ -1,0 +1,374 @@
+---
+title: "Report on issues of AAMAS"
+author: "Vinh Dang"
+date: "25 January 2016"
+output: pdf_document
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=6, fig.height=8, fig.path='all_data/',
+                      warning=FALSE, message=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=50))
+```
+
+```{r echo=FALSE}
+source("ProcessData.R")
+```
+
+# Issues of AAMAS
+
+## Showing that there is fluctuating behaviors in games
+
+
+```{r echo=FALSE}
+
+#to store average sending and standard deviation of sending of all players from 3 datasets
+all_avg = c()
+all_std = c()
+```
+
+```{r echo=FALSE}
+zTT <- readMultiXLS ("./all_data")
+  zTT[2]$subjects$my_send_proportional <- ifelse(zTT[2]$subjects$Type == 0, zTT[2]$subjects$Contribution/10, ifelse(zTT[2]$subjects$PartnerDecision > 0, zTT[2]$subjects$Contribution/3/zTT[2]$subjects$PartnerDecision, -1))
+  
+  zTT[2]$subjects$CurrGameProfit <- ifelse(zTT[2]$subjects$Type == 0, zTT[2]$subjects$PartnerDecision - zTT[2]$subjects$Contribution, zTT[2]$subjects$PartnerDecision*3 - zTT[2]$subjects$Contribution)
+  # Numbers of user of a group
+  num_users = 6
+  # Number of rounds each user play to each other
+  average_rounds = 5
+  # Number of games for each group 
+  num_games = 4
+  # Number of rounds for each game (should be 25)
+  num_rounds_per_game = (num_users - 1) * average_rounds 
+  # Number of rounds for each experiment (should be 100, because we have 4 games)
+  num_rounds_per_exp = num_rounds_per_game * num_games
+  # Number of experiments (it is 5 at the time of writing, 
+  # but can be increased if we organize more experiments)
+  num_exp = nrow (zTT[1]$globals) / num_rounds_per_exp
+  
+  Type_names = c("SENDER", "RECEIVER")
+  SIMPLE_GAME_ORDERS =      c(3,2,4,1,2)
+  ID_GAME_ORDERS =          c(1,4,1,2,3)
+  SCORE_GAME_ORDERS =       c(2,1,3,4,4)
+  COMBINE_GAME_ORDERS =     c(4,3,2,3,1)
+  
+  # first, create empty data frames to hold all the particular games
+  simple_games <- zTT[2]$subjects[0,]
+  id_games <- zTT[2]$subjects[0,]
+  score_games <- zTT[2]$subjects[0,]
+  combine_games <- zTT[2]$subjects[0,]
+  
+  for (exp_id in 1:num_exp) {
+    first_round_of_exp_globals = (exp_id - 1) * num_rounds_per_exp + 1
+    last_round_of_exp_globals = exp_id * num_rounds_per_exp
+    globals_of_exp = zTT[1]$globals[first_round_of_exp_globals:last_round_of_exp_globals,]
+    
+    first_round_of_exp_subjects = (exp_id - 1) * num_rounds_per_exp * num_users + 1
+    last_round_of_exp_subjects = exp_id * num_rounds_per_exp * num_users
+    subjects_of_exp = zTT[2]$subjects[first_round_of_exp_subjects:last_round_of_exp_subjects,]
+    
+    SIMPLE_GAME_ORDER = globals_of_exp[1,]$SIMPLE_GAME
+    ID_GAME_ORDER = globals_of_exp[1,]$ID_GAME
+    SCORE_GAME_ORDER = globals_of_exp[1,]$SCORE_GAME
+    COMBINE_GAME_ORDER = globals_of_exp[1,]$COMBINE_GAME
+    
+    simple_games <- rbind(simple_games, subjects_of_exp[((SIMPLE_GAME_ORDER - 1) * 
+                                                           num_rounds_per_game * num_users + 1): 
+                                                          (SIMPLE_GAME_ORDER * num_rounds_per_game * num_users),])
+    id_games <- rbind(id_games, subjects_of_exp[((ID_GAME_ORDER - 1) * 
+                                                   num_rounds_per_game * num_users + 1): 
+                                                  (ID_GAME_ORDER * num_rounds_per_game * num_users),])
+    score_games <- rbind(score_games, subjects_of_exp[((SCORE_GAME_ORDER - 1) * 
+                                                         num_rounds_per_game * num_users + 1): 
+                                                        (SCORE_GAME_ORDER * num_rounds_per_game * num_users),])
+    combine_games <- rbind(combine_games, subjects_of_exp[((COMBINE_GAME_ORDER - 1) * 
+                                                             num_rounds_per_game * num_users + 1): 
+                                                            (COMBINE_GAME_ORDER * num_rounds_per_game * num_users),])
+  }
+  
+  # data of senders in simple games
+  s = simple_games[simple_games$Type == 0,]
+  
+  avg_send = c()
+  std_send = c()
+  
+  for (date in unique(s$Date)) {
+    for (subject in 1:6) {
+      avg_send = c(avg_send, mean (s[s$Date == date & s$Subject == subject,]$Contribution))
+      std_send = c(std_send, pop.sd (s[s$Date == date & s$Subject == subject,]$Contribution))
+    }
+  }
+  
+  std_send = std_send [order (avg_send, decreasing = FALSE)]
+  avg_send = sort (avg_send, decreasing = FALSE)
+  
+  # Plotting average sending and standard deviation of each users
+  avg_send = avg_send/10
+  std_send = std_send/10
+  
+  all_avg = c(all_avg, avg_send)
+  all_std = c(all_std, std_send)
+  
+  plot (avg_send, ylab = "Send proportion", xlab = "Player", xlim = c(1,30), ylim = c(-0.5,1.5))
+  for (i in 1:30) {
+    segments(x0 = i, y0 = avg_send[i] - std_send[i], y1 = avg_send[i] + std_send[i], lty = 2)
+    epsilon = 0.1
+    segments(x0 = i-epsilon, x1 = i+epsilon, y0 =avg_send[i] - std_send[i], y1=avg_send[i] - std_send[i])
+    segments(x0 = i-epsilon, x1 = i+epsilon, y0 =avg_send[i] + std_send[i], y1=avg_send[i] + std_send[i])
+  }
+  
+  # Plotting some fluctuating users
+  plot (s[s$Subject == 5 & s$Date == unique(s$Date)[3],]$Contribution, xlab = "Player 17", ylab = "Sending amount", main = "An example of fluctuating user")
+  lines (s[s$Subject == 5 & s$Date == unique(s$Date)[3],]$Contribution)
+```
+
+
+```{r echo=FALSE}
+  plot (s[s$Subject == 6 & s$Date == unique(s$Date)[3],]$Contribution, xlab = "Player 18", ylab = "Sending amount", main = "An example of fluctuating user")
+  lines (s[s$Subject == 6 & s$Date == unique(s$Date)[3],]$Contribution)
+```
+
+### Fluctuating with Dubois's data
+
+```{r echo=FALSE}
+  dubois <- read.csv("all_data/data_dubois.csv", sep = ";")
+  dubois1 <- dubois[1:1080,]
+  avg_send = c()
+  std_send = c()
+  
+    for (subject in 1:36) {
+      avg_send = c(avg_send, mean (dubois1[dubois1$player_uid == subject,]$sent/10))
+      std_send = c(std_send, pop.sd (dubois1[dubois1$player_uid == subject,]$sent/10))
+    }
+  
+  std_send = std_send [order (avg_send, decreasing = FALSE)]
+  avg_send = sort (avg_send, decreasing = FALSE)
+  
+  all_avg = c(all_avg, avg_send)
+  all_std = c(all_std, std_send)
+  
+  plot (avg_send, ylab = "Send proportion", xlab = "Player", xlim = c(1,36), ylim = c(-0.5,1.5))
+  for (i in 1:36) {
+    segments(x0 = i, y0 = avg_send[i] - std_send[i], y1 = avg_send[i] + std_send[i], lty = 2)
+    epsilon = 0.1
+    segments(x0 = i-epsilon, x1 = i+epsilon, y0 =avg_send[i] - std_send[i], y1=avg_send[i] - std_send[i])
+    segments(x0 = i-epsilon, x1 = i+epsilon, y0 =avg_send[i] + std_send[i], y1=avg_send[i] + std_send[i])
+  }
+```
+
+
+### Flucuating with Bravo's data
+
+```{r echo =FALSE}
+  bravo <- read.csv (file = "all_data/Data2.csv")
+  newID <- unique (bravo$newID)
+  
+  avg_send = c()
+  std_send = c()
+  
+  for (id in newID) {
+    actions <- bravo[bravo$newID == id & !is.na(bravo$daAaB),]$daAaB / 10
+    avg_send = c(avg_send, mean (actions))
+      std_send = c(std_send, pop.sd (actions))
+  }
+  
+  std_send = std_send [order (avg_send, decreasing = FALSE)]
+  avg_send = sort (avg_send, decreasing = FALSE)
+  
+  all_avg = c(all_avg, avg_send)
+  all_std = c(all_std, std_send)
+  
+  plot (avg_send, ylab = "Send proportion", xlab = "Player", xlim = c(1,108), ylim = c(-0.5,1.5))
+  for (i in 1:108) {
+    segments(x0 = i, y0 = avg_send[i] - std_send[i], y1 = avg_send[i] + std_send[i], lty = 2)
+    epsilon = 0.1
+    segments(x0 = i-epsilon, x1 = i+epsilon, y0 =avg_send[i] - std_send[i], y1=avg_send[i] - std_send[i])
+    segments(x0 = i-epsilon, x1 = i+epsilon, y0 =avg_send[i] + std_send[i], y1=avg_send[i] + std_send[i])
+  }
+```
+
+```{r echo=FALSE}
+  # The most fluctuate user in Bravo data
+  plot (bravo[bravo$newID == 109 & !is.na(bravo$daAaB),]$daAaB / 10, xlab = "Round number", ylab = "Send proportion")
+  lines (bravo[bravo$newID == 109 & !is.na(bravo$daAaB),]$daAaB / 10)
+```
+
+
+```{r echo = FALSE}
+# Plot all average and std of sending of all 3 datasets in a same plot
+  len = length (all_avg)
+  plot (all_avg, ylab = "Send proportion", xlab = "Player", xlim = c(1,len), ylim = c(-0.2,1.2))
+  for (i in 1:len) {
+    segments(x0 = i, y0 = all_avg[i] - all_std[i], y1 = all_avg[i] + all_std[i], lty = 2)
+    epsilon = 0.1
+    segments(x0 = i-epsilon, x1 = i+epsilon, y0 =all_avg[i] - all_std[i], y1=all_avg[i] - all_std[i])
+    segments(x0 = i-epsilon, x1 = i+epsilon, y0 =all_avg[i] + all_std[i], y1=all_avg[i] + all_std[i])
+  }
+```
+## Comparison with other predicting models
+
+### Null model
+
+Null model is the model who predicts that the sending behavior of round n is equal with sending behavior of round (n-1)
+
+```{r echo=FALSE}
+null_model = function(ROUND = 8) {
+  # Plotting the difference between round N and round N+1
+  
+  send_round_n_1 = c()
+  send_round_n = c()
+  
+  for (date in unique(s$Date)) {
+    for (subject in 1:6) {
+      send_round_n_1 = c(send_round_n_1, s[s$Date == date & s$Subject == subject,]$my_send_proportional[ROUND])
+      send_round_n = c(send_round_n, s[s$Date == date & s$Subject == subject,]$my_send_proportional[(ROUND + 1)])
+    }
+  }
+  
+#   plot (x = send_round_n_1, y = send_round_n, xlab = paste("Sending behavior at round",ROUND), ylab = paste("Sending behavior at round", (ROUND+1)), 
+#         main = "Null model")
+  
+  lm1 = lm (send_round_n ~ send_round_n_1)
+  # print (summary (lm1))
+  lm1
+}
+```
+
+We calculate the average R-squared of null model from round 5 to round 10
+
+```{r, echo=FALSE}
+  adj_r_squared = c()
+  for (round in 4:9) {
+    lm1 = null_model (ROUND = round)
+    adj_r_squared = c(adj_r_squared, summary(lm1)$adj.r.squared)
+  }
+  print (paste("Average adj.R.squared of null model:", paste(mean(adj_r_squared))))
+```
+
+### Naive model
+
+Naive model is to predict the behavior based on average of previous behavior.
+
+```{r echo=FALSE}
+naive_model = function(ROUND = 8) {
+  # Plotting the difference between round N and round N+1
+  
+  send_round_n_1 = c()
+  send_round_n = c()
+  
+  for (date in unique(s$Date)) {
+    for (subject in 1:6) {
+      send_round_n_1 = c(send_round_n_1, mean (s[s$Date == date & s$Subject == subject,]$my_send_proportional[1:ROUND]))
+      send_round_n = c(send_round_n, s[s$Date == date & s$Subject == subject,]$my_send_proportional[(ROUND + 1)])
+    }
+  }
+  
+#   plot (x = send_round_n_1, y = send_round_n, xlab = paste("Sending behavior at round",ROUND), ylab = paste("Sending behavior at round", (ROUND+1)), 
+#         main = "Naive model")
+  
+  lm1 = lm (send_round_n ~ send_round_n_1)
+  # print (summary (lm1))
+  lm1
+}
+```
+
+```{r, echo=FALSE}
+  adj_r_squared = c()
+  for (round in 4:9) {
+    lm1 = naive_model (ROUND = round)
+    adj_r_squared = c(adj_r_squared, summary(lm1)$adj.r.squared)
+  }
+  print (paste("Average adj.R.squared of naive model:", paste(mean(adj_r_squared))))
+```
+
+### Trust function model
+
+```{r echo=FALSE}
+my_trust = function (ROUND = 8, data = s) {
+  data$my_trust = ave(s$Contribution/10, s$Date, s$Subject, FUN = calcTrust)
+  
+  last_actions = c()
+  last_trusts = c()
+  
+  for (date in unique(s$Date)) {
+    for (subject in 1:6) {
+      last_action = data[data$Date == date & data$Subject == subject,]$my_send_proportional[ROUND]
+      last_trust = data[data$Date == date & data$Subject == subject,]$my_trust[(ROUND - 1)]
+      last_actions = c(last_actions, last_action)
+      last_trusts = c(last_trusts, last_trust)
+    }
+  }
+  par (new = FALSE)
+  plot (x = last_trusts, y = last_actions, xlab = paste("Trust score before round ", ROUND), ylab = paste("Sending behavior at round ", ROUND),
+        cex.lab = 1.5)
+  lm2 <- lm(formula = last_actions ~ last_trusts)
+  list (last_actions, last_trusts)
+  lm2
+}
+```
+
+```{r, echo=FALSE}
+  adj_r_squared = c()
+  for (round in 4:9) {
+    lm1 = my_trust (ROUND = round)
+    adj_r_squared = c(adj_r_squared, summary(lm1)$adj.r.squared)
+  }
+  print (paste("Average adj.R.squared of our trust model:", paste(mean(adj_r_squared))))
+```
+
+### Comparing with Dubois data
+
+```{r echo=FALSE}
+  verifyTrustWithDubois <- function (round = 5) {
+  dubois <- read.csv("all_data/data_dubois.csv", sep = ";")
+  dubois1 <- dubois[1:1080,]
+  dubois1$trust <- ave(dubois1$sent/10, dubois1$player_uid, FUN = calcTrust)
+  last_trust = dubois1[dubois1$period == (round - 1),]$trust
+  last_action = dubois1[dubois1$period == round,]$sent/10
+  lm2 <- lm(formula = last_action ~ last_trust)
+  summary (lm2)
+  }
+  
+  verifyTrustWithDuboisSimple <- function (round = 5) {
+  dubois <- read.csv("all_data/data_dubois.csv", sep = ";")
+  dubois1 <- dubois[1:1080,]
+  last_trust = c()
+  for (uid in unique (dubois1$player_uid)) {
+    trust = mean (dubois1[dubois1$player_uid == uid & dubois1$period < round,]$sent/10)
+    last_trust = c(last_trust, trust)
+  }
+  last_action = dubois1[dubois1$period == round,]$sent/10
+  lm2 <- lm(formula = last_action ~ last_trust)
+  summary (lm2)
+  }
+  
+  verifyTrustWithDuboisNull <- function (round = 5) {
+  dubois <- read.csv("all_data/data_dubois.csv", sep = ";")
+  dubois1 <- dubois[1:1080,]
+  last_trust = c()
+  for (uid in unique (dubois1$player_uid)) {
+    trust = dubois1[dubois1$player_uid == uid & dubois1$period == (round - 1),]$sent/10
+    last_trust = c(last_trust, trust)
+  }
+  last_action = dubois1[dubois1$period == round,]$sent/10
+  lm2 <- lm(formula = last_action ~ last_trust)
+  summary (lm2)
+  }
+```
+
+```{r echo=FALSE}
+  sum_r_squared_trust = 0
+  sum_r_squared_simple = 0
+  sum_r_squared_null = 0
+  
+  for (round_number in 5:10) {
+    sum_r_squared_trust = sum_r_squared_trust + verifyTrustWithDubois (round = round_number)$adj.r.squared
+    sum_r_squared_simple = sum_r_squared_simple + verifyTrustWithDuboisSimple (round = round_number)$adj.r.squared
+    sum_r_squared_null = sum_r_squared_null + verifyTrustWithDuboisNull (round = round_number)$adj.r.squared
+  }
+  
+  print (paste("Average adj R squared of null model on Dubois data:", sum_r_squared_null/6 ))
+  print (paste("Average adj R squared of  simple model on Dubois data:", sum_r_squared_trust/6 ))
+  print (paste("Average adj R squared of trust average model on Dubois data:", sum_r_squared_simple/6 ))
+  
+```
+

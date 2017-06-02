@@ -1,0 +1,29 @@
+C:\Users\quang\Downloads\ztree-3_4_7\151006_1025.sbj
+Subject	1	2	3	4	5	6
+client	client1	client2	client3	client4	client5	client6
+birth_year	1975	1990	1990	1970	1984	1989
+nationality	Argentinian	french	algerian	francaise	French	Spanish
+major	Computer Science	Computer Science	computer science	no	Computer Science	Computer Engineering
+receive_back_most	Game 3 (Partner Information Game)	Game 4 (Partner Identity and Information Game)	Game 4 (Partner Identity and Information Game)	Game 3 (Partner Information Game)	Game 2 (Partner Identity Game)	Game 1 (Simple Game)
+best_personal	Game 2 (Partner Identity Game)	Game 4 (Partner Identity and Information Game)	Game 1 (Simple Game)	Game 3 (Partner Information Game)	Game 2 (Partner Identity Game)	Game 3 (Partner Information Game)
+worst_personal	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 4 (Partner Identity and Information Game)	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 1 (Simple Game)
+reason_personal	As in Game  1 there is no trust nor identity information, many times we send money for which we do not get anything in exchange. The fact of being anonymoys encourages participants to not keep kind refoundings.	Partner identity plays an important role to establish a trust relationship.			Game 1 seems the worst for the total earning since it seemed to me that the optimal strategy was to send always zero.\r\nGame 2 seemed to be the most profitable since I managed with two other players to agree on a mutually profitable strategy (always send 10 then the receiver sends back around 20), which means that each time I met these players, I was sure to earn 10.\r\nGame 4 should be also ok (it actually provides more information than Game 2), but the \"trust score\" was confusing me since I did not know how this score was computed, so I actually ignored it to concentrate on the names.	1) By giving back money at the beginning and not giving money at the end, you can fool the Information Game and get more money\r\n2) As its a blind game there is no incentive on paying back. So with such high risk, the bet should be 0.
+best_total	Game 2 (Partner Identity Game)	Game 3 (Partner Information Game)	Game 1 (Simple Game)	Game 3 (Partner Information Game)	Game 2 (Partner Identity Game)	Game 4 (Partner Identity and Information Game)
+worst_total	Game 1 (Simple Game)	Game 1 (Simple Game)	Game 4 (Partner Identity and Information Game)	No idea / Do not remember	Game 1 (Simple Game)	Game 1 (Simple Game)
+reason_total		Without identity and with trust information you can have a second luck (increasing your trust when sending moeney)			Game 1 seems to be the worst for the same reason as the questions page 3.\r\nAs I do not know how the \"trust score\" was computed (and it sometimes did not agree with my opinion on players during Game 4), I would believe that Game 2 is preferable.	1) As you know the partner and the history, its better to share and therefore both win.\r\n2) As its a blind game there is no incentive on betting
+send_more_for_profit	  1	  2	  3	  3	  1	  1
+send_less_for_profit	  3	  4	  3	  4	  5	  5
+trust_help_receiver	  4	  2	  5	  3	  1	  1
+show_id_help	  5	  4	  5	  2	  5	  5
+show_score_help	  4	  2	  4	  5	  3	  5
+show_combine_help	  4	  5	  5	  5	  5	  5
+trust_score_correctness	  4	  2	  4	  4	  2	  5
+trust_help_sender	  5	  3	  2	  3	  4	  4
+identity_help_decide	  5	  5	  5	  2	  5	  5
+trust_score_help_decide	  4	  4	  4	  4	  3	  5
+combine_help_decide	  4	  5	  5	  4	  5	  5
+important_factor	Identity	Identity	Identity	Trust score	Identity	Identity
+reason_important_factor	When the trust score is varying not so much is difficult to track the past behaviour of the participant.	You can establish a trust relationship when you knows the identity of the eprson	when i see the identity of my partner, i can remember our interactions in the past and therefore decide of the amount i will send to him		During game 4, I did not agree sometimes with the variation of the score (it sometimes had a huge variation on small exchanges), so I did not trust this score too much	By knowing the name of the user, you can track previous interactions to see if he/she played fairly or not.
+partner_fair	  3	  3	  3	  4	  3	  5
+partner_comment	Some of them completely positive, some of them completely negative.				With some partners, it was easy to find an agreement on a mutually profitable strategy (send 10, then send back 20).\r\nWith some other partners, it was almost impossible (so I ended up stopping any transaction by sending 0)	In most cases that was true.
+comment_overall		Simple game is a bit boring		Good game		It would be also interesting to play the game and you knew the amount of points of the player and the trust with other players.
