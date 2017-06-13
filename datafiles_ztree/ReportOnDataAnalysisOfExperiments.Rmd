@@ -2065,7 +2065,7 @@ for (type in 0:1) {
 
 ## Group effect analysis for each round
 
-However, we keep only first 2 rounds in each roles
+Now, we create five datasets for five rounds to analyze ANOVA. We expected that the same effect will appear in 5 analysis.
 
 Date: 12-Jun-2017
 
@@ -2161,6 +2161,114 @@ for (type in 0:1) {
     
     anova_analysis(df, type = type, num_way = 3)
   }
+}
+```
+
+\pagebreak
+
+##ANOVA on each round regardless partner
+
+Repeat the previous analysis but for all 12 rounds and without group id
+
+Date: Tue 13-Jun-2017
+
+```{r, echo=FALSE}
+require(car)
+for (type in 0:1) {
+  # AbsSend: absolute sending
+  # RelSend: send proportion of maximum
+  # Profit: profit get at this round
+  # game_pos:  order of game to play in this experiment
+  
+  list_of_p_values <- c()
+  for (round_id in 1:12) {
+    df <- data.frame("id" = as.numeric(), 
+                   "GroupID"= as.numeric(),
+                 "SHOW_TRUST"=as.numeric(),
+                 "SHOW_ID"=as.numeric(),
+                 # "AbsSend" = as.numeric(),  
+                 "RelSend" = as.numeric(),  
+                 # "Profit" = as.numeric(),
+                 # "game_pos" = as.numeric(),
+                 # "response_time" = as.numeric(),
+                 "round_number" = as.numeric()
+                 )
+    print (paste("Analyze", Type_names[type+1]))
+    print (paste("Round number:", round_id))
+    for (exp_id in 1:num_exp) {
+          first_round_of_exp_subjects = (exp_id - 1) * num_rounds_per_game * num_users + 1
+          last_round_of_exp_subjects = exp_id * num_rounds_per_game * num_users
+          simple_game = simple_games[first_round_of_exp_subjects:last_round_of_exp_subjects,]
+          id_game = id_games [first_round_of_exp_subjects:last_round_of_exp_subjects,]
+          score_game = score_games [first_round_of_exp_subjects:last_round_of_exp_subjects,]
+          combine_game = combine_games[first_round_of_exp_subjects:last_round_of_exp_subjects,]
+          
+          # user_id = j + num_users * (exp_id - 1)
+          
+          all_game <- list (simple_game, id_game, score_game, combine_game)
+          
+          for (k in 1:num_games) {
+            cur_game <- as.data.frame(all_game [k])
+            for (user_id in 1:6) {
+              send_proportion <- cur_game[cur_game$Subject == user_id  & cur_game$Type == type,]$my_send_proportional
+              partner_trust_score <- cur_game[cur_game$Subject == user_id  & cur_game$Type == type,]$showing_trust_score
+              # print (paste(user_id, exp_id, k))
+              if (length(send_proportion) >= round_id) {
+                if (send_proportion[round_id] >= 0) {
+                  new_row <- c(as.numeric (user_id) + num_users * (exp_id - 1),
+                    as.numeric (exp_id),
+                    ifelse (k <= 2, 0, 1),
+                    ifelse (k %% 2 == 0, 1, 0),
+                    send_proportion[round_id],
+                    period
+                  )
+                  df[nrow(df)+1,] <- new_row
+                }
+              }
+            }
+          }
+      }
+    df$id <- as.factor(df$id)
+    df$GroupID <- as.factor(df$GroupID)
+    df$SHOW_TRUST <- as.factor (df$SHOW_TRUST)
+    df$SHOW_ID <- as.factor(df$SHOW_ID)
+    df$game_setting <- as.factor (((as.numeric (df$SHOW_TRUST) - 1) * 2 + (as.numeric (df$SHOW_ID) - 1) + 1))
+    
+    df$game_pos <- NULL
+    df$game_pos <-df$game_setting
+    
+    df$score <- df$RelSend
+    
+    df$AbsSend <- NULL
+    df$RelSend <- NULL
+    df$Profit <- NULL
+    df$response_time <- NULL
+    df$game_pos <- NULL
+    df$game_setting <- NULL
+    
+    df$round_number <- as.factor(df$round_number)
+    
+    aov1 <- aov (score ~ SHOW_TRUST * SHOW_ID + Error (id/(SHOW_TRUST*SHOW_ID)), data = df)
+    aov1.summary <- summary (aov1)
+    p.value <- aov1.summary$`Error: id:SHOW_TRUST:SHOW_ID`[[1]][["Pr(>F)"]][[1]]
+    list_of_p_values <- c(list_of_p_values, p.value)
+    print (aov1.summary)
+    
+    # do linear regression
+    # date: 13 - Jun - 2017
+    
+    lm1 <- lm (score ~ id, data = df)
+    df$lm1.res = resid(lm1)
+    lm2 <- lm (lm1.res ~ SHOW_TRUST + SHOW_ID + SHOW_TRUST * SHOW_ID, data=df)
+    print (summary (lm2))
+  }
+  
+  print ("------")
+  print (paste("TYPE: ", Type_names[type+1]))
+  # print (paste("List of p_value:", list_of_p_values))
+  plot (list_of_p_values, xlab = paste("Round (regardless partner) for:", Type_names[type+1]), ylab="p_value of ANOVA", type = "o", ylim =c(0,1))
+  abline (h=0.05, col = "red")
+  print (paste("Average:", mean(list_of_p_values)))
 }
 ```
 
