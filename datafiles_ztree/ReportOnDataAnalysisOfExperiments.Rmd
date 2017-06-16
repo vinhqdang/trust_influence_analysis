@@ -78,6 +78,10 @@ SBJs <- processMultiSBJ ("./all_data")
 # Create my sending proportional
 zTT[2]$subjects$my_send_proportional <- ifelse(zTT[2]$subjects$Type == 0, zTT[2]$subjects$Contribution/10, ifelse(zTT[2]$subjects$PartnerDecision > 0, zTT[2]$subjects$Contribution/3/zTT[2]$subjects$PartnerDecision, -1))
 
+# add epsilon value to avoid the case 0/0
+# EPSILON = 0.001
+# zTT[2]$subjects$my_send_proportional <- ifelse(zTT[2]$subjects$Type == 0, zTT[2]$subjects$Contribution/10,  zTT[2]$subjects$Contribution/3/ (zTT[2]$subjects$PartnerDecision + EPSILON))
+
 zTT[2]$subjects$CurrGameProfit <- ifelse(zTT[2]$subjects$Type == 0, zTT[2]$subjects$PartnerDecision - zTT[2]$subjects$Contribution, zTT[2]$subjects$PartnerDecision*3 - zTT[2]$subjects$Contribution)
 ```
 
@@ -113,6 +117,8 @@ SCORE_GAME_ORDERS =       c(2,1,3,4,4)
 COMBINE_GAME_ORDERS =     c(4,3,2,3,1)
 
 GAME_NAMES <- c("Simple GAME", "ID GAME", "Score GAME", "Combine GAME")
+
+col_list <- c("red","green","blue","black","orange","violet")
 ```
 
 We also define some global variables which will be used later.
@@ -248,23 +254,23 @@ for (type in 0:1) {
   #calculate average sending amount per game
   print ("Mean of sending amount per games")
   print (mean (simple_games[simple_games$Type == type,]$Contribution))
-  print (mean (id_games[id_game$Type == type,]$Contribution))
+  print (mean (id_games[id_games$Type == type,]$Contribution))
   print (mean (score_games[score_games$Type == type,]$Contribution))
   print (mean (combine_games[combine_games$Type == type,]$Contribution))
   
   # calculate average sending proportion per game
   print ("Mean of sending proportion per game")
   print (mean (simple_games[simple_games$Type == type & simple_games$my_send_proportional >= 0,]$my_send_proportional))
-  print (mean (id_games[id_game$Type == type & id_games$my_send_proportional >= 0,]$my_send_proportional))
+  print (mean (id_games[id_games$Type == type & id_games$my_send_proportional >= 0,]$my_send_proportional))
   print (mean (score_games[score_games$Type == type & score_games$my_send_proportional >= 0,]$my_send_proportional))
   print (mean (combine_games[combine_games$Type == type & combine_games$my_send_proportional >= 0,]$my_send_proportional))
   
   # calculate by SHOW_TRUST and SHOW_ID
-  print (paste ("Mean of send proportion no TRUST:", mean (c(simple_games[simple_games$Type == type & simple_games$my_send_proportional >= 0,]$my_send_proportional, id_games[id_game$Type == type & id_games$my_send_proportional >= 0,]$my_send_proportional))))
+  print (paste ("Mean of send proportion no TRUST:", mean (c(simple_games[simple_games$Type == type & simple_games$my_send_proportional >= 0,]$my_send_proportional, id_games[id_games$Type == type & id_games$my_send_proportional >= 0,]$my_send_proportional))))
   print (paste ("Mean of send proportion with TRUST:", mean (c(score_games[score_games$Type == type & score_games$my_send_proportional >= 0,]$my_send_proportional, combine_games[combine_games$Type == type & combine_games$my_send_proportional >= 0,]$my_send_proportional))))
   
   print (paste ("Mean of send proportion no ID:", mean (c(simple_games[simple_games$Type == type & simple_games$my_send_proportional >= 0,]$my_send_proportional, score_games[score_games$Type == type & score_games$my_send_proportional >= 0,]$my_send_proportional))))
-  print (paste ("Mean of send proportion with ID:", mean (c(id_games[score_games$Type == type & score_games$my_send_proportional >= 0,]$my_send_proportional, combine_games[combine_games$Type == type & combine_games$my_send_proportional >= 0,]$my_send_proportional))))
+  print (paste ("Mean of send proportion with ID:", mean (c(id_games[id_games$Type == type & id_games$my_send_proportional >= 0,]$my_send_proportional, combine_games[combine_games$Type == type & combine_games$my_send_proportional >= 0,]$my_send_proportional))))
   
   print ("Average profit user get in 1 round per game")
   print (mean (simple_games[simple_games$Type == type,]$CurrGameProfit))
@@ -3085,18 +3091,20 @@ Reputation score = average of previous send proportion
     x_simple <- aggregate(df_simple[,c(3,2,11,8,9,12)], list(df_simple$id), mean, na.rm = TRUE)
     # colnames(x_simple) <- c("grp","RelSend","my_reputation","trust_value","AbsPartnerSend","my_trust_value")
     if (type == 0) {
-      print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation, data = x_simple)))
+      # print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation, data = x_simple)))
+      print (summary (lm (RelSend ~ my_trust_value + trust_value, data = x_simple)))
     } else {
-      print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation + AbsPartnerSend, data = x_simple)))
+      # print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation + AbsPartnerSend, data = x_simple)))
+      print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_simple)))
     }
     
-    print ("Test the interaction")
-    print (summary (lm (RelSend ~ my_trust_value + trust_value + trust_value * my_trust_value, data = x_simple)))
-    
-    print ("Test the interaction variable alone")
-    print (summary (lm (RelSend ~ my_trust_value , data = x_simple)))
-    x_simple$combine_trust <- x_simple$trust_value * x_simple$my_trust_value
-    print (summary (lm (RelSend ~ combine_trust, data = x_simple)))
+    # print ("Test the interaction")
+    # print (summary (lm (RelSend ~ my_trust_value + trust_value + trust_value * my_trust_value, data = x_simple)))
+    # 
+    # print ("Test the interaction variable alone")
+    # print (summary (lm (RelSend ~ my_trust_value , data = x_simple)))
+    # x_simple$combine_trust <- x_simple$trust_value * x_simple$my_trust_value
+    # print (summary (lm (RelSend ~ combine_trust, data = x_simple)))
     
     
     print (paste (("Linear regression of relative sending on reputation value of ID Game for type: "), Type_names [ type + 1]))
@@ -3104,36 +3112,40 @@ Reputation score = average of previous send proportion
     x_id <- aggregate(df_id[,c(3,2,11,8,9,12)], list(df_id$id), mean, na.rm = TRUE)
     # colnames(x_id) <- c("grp","RelSend","my_reputation","trust_value","AbsPartnerSend","my_trust_value")
     if (type == 0) {
-      print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation, data = x_id)))
+      # print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation, data = x_id)))
+      print (summary (lm (RelSend ~ my_trust_value + trust_value, data = x_id)))
     } else {
-      print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation + AbsPartnerSend, data = x_id)))
+      # print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation + AbsPartnerSend, data = x_id)))
+      print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_id)))
     }
     
-    print ("Test the interaction")
-    print (summary (lm (RelSend ~ my_trust_value + trust_value + trust_value * my_trust_value, data = x_id)))
-    
-    print ("Test the interaction variable alone")
-    print (summary (lm (RelSend ~ my_trust_value , data = x_id)))
-    x_id$combine_trust <- x_id$trust_value * x_id$my_trust_value
-    print (summary (lm (RelSend ~ combine_trust, data = x_id)))
+    # print ("Test the interaction")
+    # print (summary (lm (RelSend ~ my_trust_value + trust_value + trust_value * my_trust_value, data = x_id)))
+    # 
+    # print ("Test the interaction variable alone")
+    # print (summary (lm (RelSend ~ my_trust_value , data = x_id)))
+    # x_id$combine_trust <- x_id$trust_value * x_id$my_trust_value
+    # print (summary (lm (RelSend ~ combine_trust, data = x_id)))
     
     print (paste (("Linear regression of relative sending on reputation value of Score Game for type: "), Type_names [ type + 1]))
     
     x_score <- aggregate(df_score[,c(3,2,11,8,9,12)], list(df_score$id), mean, na.rm = TRUE)
     # colnames(x_score) <- c("grp","RelSend","my_reputation","trust_value","AbsPartnerSend","my_trust_value")
     if (type == 0) {
-      print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation, data = x_score)))
+      # print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation, data = x_score)))
+      print (summary (lm (RelSend ~ my_trust_value + trust_value, data = x_score)))
     } else {
-      print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation + AbsPartnerSend, data = x_score)))
+      # print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation + AbsPartnerSend, data = x_score)))
+      print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_score)))
     }
     
-    print ("Test the interaction")
-    print (summary (lm (RelSend ~ my_trust_value + trust_value + trust_value * my_trust_value, data = x_score)))
-    
-    print ("Test the interaction variable alone")
-    print (summary (lm (RelSend ~ my_trust_value , data = x_score)))
-    x_score$combine_trust <- x_score$trust_value * x_score$my_trust_value
-    print (summary (lm (RelSend ~ combine_trust, data = x_score)))
+    # print ("Test the interaction")
+    # print (summary (lm (RelSend ~ my_trust_value + trust_value + trust_value * my_trust_value, data = x_score)))
+    # 
+    # print ("Test the interaction variable alone")
+    # print (summary (lm (RelSend ~ my_trust_value , data = x_score)))
+    # x_score$combine_trust <- x_score$trust_value * x_score$my_trust_value
+    # print (summary (lm (RelSend ~ combine_trust, data = x_score)))
     
     
     print (paste (("Linear regression of relative sending on reputation value of Combine Game for type: "), Type_names [ type + 1]))
@@ -3141,18 +3153,20 @@ Reputation score = average of previous send proportion
     x_combine <- aggregate(df_combine[,c(3,2,11,8,9,12)], list(df_combine$id), mean, na.rm = TRUE)
     # colnames(x_combine) <- c("grp","RelSend","my_reputation","trust_value","AbsPartnerSend","my_trust_value")
     if (type == 0) {
-      print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation, data = x_combine)))
+      # print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation, data = x_combine)))
+      print (summary (lm (RelSend ~ my_trust_value + trust_value , data = x_combine)))
     } else {
-      print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation + AbsPartnerSend, data = x_combine)))
+      # print (summary (lm (RelSend ~ my_reputation + my_trust_value + trust_value + partner_reputation + AbsPartnerSend, data = x_combine)))
+      print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_combine)))
     }
     
-    print ("Test the interaction")
-    print (summary (lm (RelSend ~ my_trust_value + trust_value + trust_value * my_trust_value, data = x_combine)))
-    
-    print ("Test the interaction variable alone")
-    print (summary (lm (RelSend ~ my_trust_value , data = x_combine)))
-    x_combine$combine_trust <- x_combine$trust_value * x_combine$my_trust_value
-    print (summary (lm (RelSend ~ combine_trust, data = x_combine)))
+    # print ("Test the interaction")
+    # print (summary (lm (RelSend ~ my_trust_value + trust_value + trust_value * my_trust_value, data = x_combine)))
+    # 
+    # print ("Test the interaction variable alone")
+    # print (summary (lm (RelSend ~ my_trust_value , data = x_combine)))
+    # x_combine$combine_trust <- x_combine$trust_value * x_combine$my_trust_value
+    # print (summary (lm (RelSend ~ combine_trust, data = x_combine)))
     
   }
   
@@ -3160,10 +3174,14 @@ Reputation score = average of previous send proportion
 
 \pagebreak
 
-##Predict send proportion based on trust scores
+# Analyze by individual trial rather than average value
+
+##Trust score over time & Chi-square on frequency of sending proportion by game
 
 Date: Tue 13-Jun-2017
 Test the amound sent based on trust value and amount received (if any) using individual but not average sending proportion
+
+Update on Thu 15-Jun-2017
 
 ```{r, echo = FALSE}
   for (type in 0:1) {
@@ -3178,7 +3196,8 @@ Test the amound sent based on trust value and amount received (if any) using ind
                              "my_trust_value" = as.numeric(),
                              "PartnerRelSend" = as.numeric(),
                              "my_reputation" = as.numeric(),
-                             "partner_reputation" = as.numeric()
+                             "partner_reputation" = as.numeric(),
+                             "round_number_with_partner" = as.numeric()  # indicate round number when play with a partner (1-5)
                              )
     df_id <- data.frame ("id" = as.numeric(),
                          "trust_value" = as.numeric(),
@@ -3191,7 +3210,9 @@ Test the amound sent based on trust value and amount received (if any) using ind
                           "my_trust_value" = as.numeric(),
                          "PartnerRelSend" = as.numeric(),
                           "my_reputation" = as.numeric(),
-                          "partner_reputation" = as.numeric()
+                          "partner_reputation" = as.numeric(),
+                          "round_number_with_partner" = as.numeric()
+                         
                          )
     df_score <- data.frame ("id" = as.numeric(),
                             "trust_value" = as.numeric(),
@@ -3204,7 +3225,8 @@ Test the amound sent based on trust value and amount received (if any) using ind
                              "my_trust_value" = as.numeric(),
                             "PartnerRelSend" = as.numeric(),
                              "my_reputation" = as.numeric(),
-                             "partner_reputation" = as.numeric()
+                             "partner_reputation" = as.numeric(),
+                             "round_number_with_partner" = as.numeric()
                             )
     df_combine <- data.frame ("id" = as.numeric(),
                               "trust_value" = as.numeric(),
@@ -3217,7 +3239,8 @@ Test the amound sent based on trust value and amount received (if any) using ind
                              "my_trust_value" = as.numeric(),
                              "PartnerRelSend" = as.numeric(),
                              "my_reputation" = as.numeric(),
-                             "partner_reputation" = as.numeric()
+                             "partner_reputation" = as.numeric(),
+                             "round_number_with_partner" = as.numeric()
                              )
     for (exp_id in 1:num_exp) {
       first_round_of_exp_subjects = (exp_id - 1) * num_rounds_per_game * num_users + 1
@@ -3227,235 +3250,413 @@ Test the amound sent based on trust value and amount received (if any) using ind
       score_game = score_games [first_round_of_exp_subjects:last_round_of_exp_subjects,]
       combine_game = combine_games[first_round_of_exp_subjects:last_round_of_exp_subjects,]
       
-      cur_game = simple_game
-      for (user_id in 1:num_users) {
-        cur_reputation = 0.5
-        partner_reputation = 0.5
-        for (i in 1:nrow(cur_game)) {
-          if (cur_game[i,]$Subject == user_id) {
-            if (cur_game[i,]$my_send_proportional >= 0 & cur_game[i,]$Type == type) {
-              my_trust_score = cur_game[cur_game$Type == (1  - type) & cur_game$Partner == user_id 
-                                        & cur_game$Period == cur_game[i,]$Period,]$showing_trust_score
-              if (cur_game[i,]$Period %% 25 > 1) {
-                
-                # calculate my reputation
-                cur_period = cur_game[i,]$Period
-                cur_reputation = mean (cur_game[cur_game$Subject == user_id 
-                                                & cur_game$Period < cur_period
-                                                & cur_game$my_send_proportional >= 0,]$my_send_proportional)
-                if (is.nan(cur_reputation)) {
-                  cur_reputation = 0.5
-                }
-                
-                # calculate partner reputation
-                partner_reputation = mean (cur_game[cur_game$Partner == user_id 
-                                                & cur_game$Period < cur_period
-                                                & cur_game$my_send_proportional >= 0,]$my_send_proportional)
-                if (is.nan (partner_reputation)) {
-                  partner_reputation = 0.5
-                }
-                
-              } else {
-                cur_reputation = 0.5
-                partner_reputation = 0.5
-              }
-              new_row = c((exp_id - 1) * num_users + user_id,
-                    (cur_game[i,]$showing_trust_score),
-                    (cur_game[i,]$my_send_proportional),
-                    (cur_game[i,]$Contribution),
-                    (cur_game[i,]$response_time),
-                    SIMPLE_GAME_ORDERS[exp_id],
-                     (calc_peak_end_trust(cur_game[i,]$showing_trust_score)),
-                    (cur_game[i,]$PartnerDecision),
-                    my_trust_score,
-                    (cur_game[i,]$send_proportion),
-                    cur_reputation,
-                    partner_reputation
-                    )
-                  df_simple[nrow(df_simple) + 1,] <- new_row
-            }
-          }
-        }
-      }
-        
-      cur_game = id_game
-      for (user_id in 1:num_users) {
-        cur_reputation = 0.5
-        partner_reputation = 0.5
-        for (i in 1:nrow(cur_game)) {
-          if (cur_game[i,]$Subject == user_id) {
-            if (cur_game[i,]$my_send_proportional >= 0 & cur_game[i,]$Type == type) {
-              my_trust_score = cur_game[cur_game$Type == (1  - type) & cur_game$Partner == user_id 
-                                        & cur_game$Period == cur_game[i,]$Period,]$showing_trust_score
-              
-              if (cur_game[i,]$Period %% 25 > 1) {
-                
-                # calculate my reputation
-                cur_period = cur_game[i,]$Period
-                cur_reputation = mean (cur_game[cur_game$Subject == user_id 
-                                                & cur_game$Period < cur_period
-                                                & cur_game$my_send_proportional >= 0,]$my_send_proportional)
-                if (is.nan(cur_reputation)) {
-                  cur_reputation = 0.5
-                }
-                
-                # calculate partner reputation
-                partner_reputation = mean (cur_game[cur_game$Partner == user_id 
-                                                & cur_game$Period < cur_period
-                                                & cur_game$my_send_proportional >= 0,]$my_send_proportional)
-                if (is.nan (partner_reputation)) {
-                  partner_reputation = 0.5
-                }
-                
-              } else {
-                cur_reputation = 0.5
-                partner_reputation = 0.5
-              }
-              
-              new_row = c((exp_id - 1) * num_users + user_id,
-                    (cur_game[i,]$showing_trust_score),
-                    (cur_game[i,]$my_send_proportional),
-                    (cur_game[i,]$Contribution),
-                    (cur_game[i,]$response_time),
-                    SIMPLE_GAME_ORDERS[exp_id],
-                     (calc_peak_end_trust(cur_game[i,]$showing_trust_score)),
-                    (cur_game[i,]$PartnerDecision),
-                    my_trust_score,
-                    (cur_game[i,]$send_proportion),
-                    cur_reputation,
-                    partner_reputation
-                    )
-                  df_id[nrow(df_id) + 1,] <- new_row
-            }
-          }
-        }
-      }
-        
-      cur_game = score_game
-      for (user_id in 1:num_users) {
-        cur_reputation = 0.5
-        partner_reputation = 0.5
-        for (i in 1:nrow(cur_game)) {
-          if (cur_game[i,]$Subject == user_id) {
-            if (cur_game[i,]$my_send_proportional >= 0 & cur_game[i,]$Type == type) {
-              my_trust_score = cur_game[cur_game$Type == (1  - type) & cur_game$Partner == user_id 
-                                        & cur_game$Period == cur_game[i,]$Period,]$showing_trust_score
-              if (cur_game[i,]$Period %% 25 > 1) {
-                
-                # calculate my reputation
-                cur_period = cur_game[i,]$Period
-                cur_reputation = mean (cur_game[cur_game$Subject == user_id 
-                                                & cur_game$Period < cur_period
-                                                & cur_game$my_send_proportional >= 0,]$my_send_proportional)
-                if (is.nan(cur_reputation)) {
-                  cur_reputation = 0.5
-                }
-                
-                # calculate partner reputation
-                partner_reputation = mean (cur_game[cur_game$Partner == user_id 
-                                                & cur_game$Period < cur_period
-                                                & cur_game$my_send_proportional >= 0,]$my_send_proportional)
-                if (is.nan (partner_reputation)) {
-                  partner_reputation = 0.5
-                }
-                
-              } else {
-                cur_reputation = 0.5
-                partner_reputation = 0.5
-              }
-              new_row = c((exp_id - 1) * num_users + user_id,
-                    (cur_game[i,]$showing_trust_score),
-                    (cur_game[i,]$my_send_proportional),
-                    (cur_game[i,]$Contribution),
-                    (cur_game[i,]$response_time),
-                    SIMPLE_GAME_ORDERS[exp_id],
-                     (calc_peak_end_trust(cur_game[i,]$showing_trust_score)),
-                    (cur_game[i,]$PartnerDecision),
-                    my_trust_score,
-                    (cur_game[i,]$send_proportion),
-                    cur_reputation,
-                    partner_reputation
-                    )
-                  df_score[nrow(df_score) + 1,] <- new_row
-            }
-          }
-        }
-      }
-        
-      cur_game = combine_game
-      for (user_id in 1:num_users) {
-        cur_reputation = 0.5
-        partner_reputation = 0.5
-        for (i in 1:nrow(cur_game)) {
-          if (cur_game[i,]$Subject == user_id) {
-            if (cur_game[i,]$my_send_proportional >= 0 & cur_game[i,]$Type == type) {
-              my_trust_score = cur_game[cur_game$Type == (1  - type) & cur_game$Partner == user_id 
-                                        & cur_game$Period == cur_game[i,]$Period,]$showing_trust_score
-              if (cur_game[i,]$Period %% 25 > 1) {
-                
-                # calculate my reputation
-                cur_period = cur_game[i,]$Period
-                cur_reputation = mean (cur_game[cur_game$Subject == user_id 
-                                                & cur_game$Period < cur_period
-                                                & cur_game$my_send_proportional >= 0,]$my_send_proportional)
-                if (is.nan(cur_reputation)) {
-                  cur_reputation = 0.5
-                }
-                
-                # calculate partner reputation
-                partner_reputation = mean (cur_game[cur_game$Partner == user_id 
-                                                & cur_game$Period < cur_period
-                                                & cur_game$my_send_proportional >= 0,]$my_send_proportional)
-                if (is.nan (partner_reputation)) {
-                  partner_reputation = 0.5
-                }
-                
-              } else {
-                cur_reputation = 0.5
-                partner_reputation = 0.5
-              }
-              
-              new_row = c((exp_id - 1) * num_users + user_id,
-                    (cur_game[i,]$showing_trust_score),
-                    (cur_game[i,]$my_send_proportional),
-                    (cur_game[i,]$Contribution),
-                    (cur_game[i,]$response_time),
-                    SIMPLE_GAME_ORDERS[exp_id],
-                     (calc_peak_end_trust(cur_game[i,]$showing_trust_score)),
-                    (cur_game[i,]$PartnerDecision),
-                    my_trust_score,
-                    (cur_game[i,]$send_proportion),
-                    cur_reputation,
-                    partner_reputation
-                    )
-                  df_combine[nrow(df_combine) + 1,] <- new_row
-            }
-          }
-        }
-      }
+      all_game <- list (simple_game, id_game, score_game, combine_game)
       
+      
+      for (k in 1:num_games) {
+        cur_game <- as.data.frame(all_game[k])
+        round_number_with_partners = c(0,0,0,0,0,0)
+        for (user_id in 1:num_users) {
+          cur_reputation = 0.5
+          partner_reputation = 0.5
+          for (i in 1:nrow(cur_game)) {
+            if (cur_game[i,]$Subject == user_id) {
+              partner_id <- cur_game[i,]$Partner
+              round_number_with_partners[partner_id] <- round_number_with_partners[partner_id] + 1
+              if (cur_game[i,]$my_send_proportional >= 0 & cur_game[i,]$Type == type) {
+                my_trust_score = cur_game[cur_game$Type == (1  - type) & cur_game$Partner == user_id 
+                                          & cur_game$Period == cur_game[i,]$Period,]$showing_trust_score
+                if (cur_game[i,]$Period %% 25 > 1) {
+                  # calculate my reputation
+                  cur_period = cur_game[i,]$Period
+                  cur_reputation = mean (cur_game[cur_game$Subject == user_id 
+                                                  & cur_game$Period < cur_period
+                                                  & cur_game$my_send_proportional >= 0,]$my_send_proportional)
+                  if (is.nan(cur_reputation)) {
+                    cur_reputation = 0.5
+                  }
+                  
+                  # calculate partner reputation
+                  partner_id <- cur_game[i,]$Partner
+                  partner_reputation = mean (cur_game[cur_game$Subject == partner_id 
+                                                  & cur_game$Period < cur_period
+                                                  & cur_game$my_send_proportional >= 0,]$my_send_proportional)
+                  if (is.nan (partner_reputation)) {
+                    partner_reputation = 0.5
+                  }
+                  
+                } else {
+                  cur_reputation = 0.5
+                  partner_reputation = 0.5
+                }
+                new_row = c((exp_id - 1) * num_users + user_id,
+                      (cur_game[i,]$showing_trust_score),
+                      (cur_game[i,]$my_send_proportional),
+                      (cur_game[i,]$Contribution),
+                      (cur_game[i,]$response_time),
+                      SIMPLE_GAME_ORDERS[exp_id],
+                       (calc_peak_end_trust(cur_game[i,]$showing_trust_score)),
+                      (cur_game[i,]$PartnerDecision),
+                      my_trust_score,
+                      (cur_game[i,]$send_proportion),
+                      cur_reputation,
+                      partner_reputation,
+                      ifelse (round_number_with_partners[partner_id] %% 5 == 0,5,round_number_with_partners[partner_id] %% 5)
+                      )
+                if (k == 1) {
+                    df_simple[nrow(df_simple) + 1,] <- new_row
+                } else if (k == 2) {
+                  df_id[nrow(df_id) + 1,] <- new_row
+                } else if (k == 3) {
+                  df_score[nrow(df_score) + 1,] <- new_row
+                } else if (k == 4) {
+                  df_combine[nrow(df_combine) + 1,] <- new_row
+                }
+              }
+            }
+          }
+        }
+      }
     }
-    
     all_df <- list (df_simple, df_id, df_score, df_combine)
     
+    #create table for chi-square
+    print (paste("Number of sending 0.0 as:", Type_names[type+1]))
+    x <- rep (0,4)
+    for (k in 1:num_games) {
+      cur_game <-as.data.frame(all_df[k])
+      print(paste(GAME_NAMES[k],":", nrow(cur_game[cur_game$RelSend == 0,])))
+      x[k] <- nrow(cur_game[cur_game$RelSend == 0,])
+    }
+    x <- matrix (x, byrow = TRUE, 2, 2)
+    print (x)
+    print (chisq.test(x))
+    
+    print ("Update on Fri 16-Jun-2017: due to the fact that chisq is tested on dependent data, we switch to logistic regression to check if sending 0 is really different between games")
+    df0 <- data.frame("id" = as.numeric(),
+                      "send0" = as.numeric(),
+                      "show_trust" = as.numeric(),
+                      "show_id" = as.numeric()
+                      )
+    for (k in 1:num_games) {
+      cur_df <- as.data.frame(all_df[k])
+      id <- cur_df$id
+      send0 <- ifelse(cur_df$RelSend == 0, 1, 0)
+      show_trust <- rep(ifelse(k > 2, 1, 0), length(send0))
+      show_id <- rep(ifelse (k %% 2 == 0, 1, 0), length (send0))
+      df0 <- rbind (df0,cbind(id, send0, show_trust, show_id))
+    }
+    df0 <- as.data.frame(df0)
+    df0$id <- as.factor(df0$id)
+    df0$send0 <- as.logical(df0$send0)
+    df0$show_trust <- as.logical (df0$show_trust)
+    df0$show_id <- as.logical (df0$show_id)
+    
+    g1 <- glm(send0 ~ id + show_trust+ show_id,family=binomial(link='logit'),data=df0)
+    print (summary (g1))
+    
+    print (paste("Number of sending >= 0.7 as:", Type_names[type+1]))
+    x <- rep (0,4)
+    for (k in 1:num_games) {
+      cur_game <-as.data.frame(all_df[k])
+      print(paste(GAME_NAMES[k],":", nrow(cur_game[cur_game$RelSend >= 0.7,])))
+      x[k] <- nrow(cur_game[cur_game$RelSend >= 0.7,])
+    }
+    x <- matrix (x, byrow = TRUE, 2, 2)
+    print (x)
+    print (chisq.test(x))
+    
+    # print ("Update on Fri 16-Jun-2017: due to the fact that chisq is tested on dependent data, we switch to logistic regression to check if sending 0 is really different between games")
+    df0 <- data.frame("id" = as.numeric(),
+                      "send0" = as.numeric(),
+                      "show_trust" = as.numeric(),
+                      "show_id" = as.numeric()
+                      )
+    for (k in 1:num_games) {
+      cur_df <- as.data.frame(all_df[k])
+      id <- cur_df$id
+      send0 <- ifelse(cur_df$RelSend >= 0.7, 1, 0)
+      show_trust <- rep(ifelse(k > 2, 1, 0), length(send0))
+      show_id <- rep(ifelse (k %% 2 == 0, 1, 0), length (send0))
+      df0 <- rbind (df0,cbind(id, send0, show_trust, show_id))
+    }
+    df0 <- as.data.frame(df0)
+    df0$id <- as.factor(df0$id)
+    df0$send0 <- as.logical(df0$send0)
+    df0$show_trust <- as.logical (df0$show_trust)
+    df0$show_id <- as.logical (df0$show_id)
+    
+    g1 <- glm(send0 ~ id + show_trust+ show_id,family=binomial(link='logit'),data=df0)
+    print (summary (g1))
+    
+    print (paste("Number of sending 1.0 (maximum) as:", Type_names[type+1]))
+    x <- rep (0,4)
+    for (k in 1:num_games) {
+      cur_game <-as.data.frame(all_df[k])
+      print(paste(GAME_NAMES[k],":", nrow(cur_game[cur_game$RelSend == 1.0,])))
+      x[k] <- nrow(cur_game[cur_game$RelSend >= 0.7,])
+    }
+    x <- matrix (x, byrow = TRUE, 2, 2)
+    print (x)
+    print (chisq.test(x))
+    
+    print ("Update on Fri 16-Jun-2017: due to the fact that chisq is tested on dependent data, we switch to logistic regression to check if sending 0 is really different between games")
+    df0 <- data.frame("id" = as.numeric(),
+                      "send0" = as.numeric(),
+                      "show_trust" = as.numeric(),
+                      "show_id" = as.numeric()
+                      )
+    for (k in 1:num_games) {
+      cur_df <- as.data.frame(all_df[k])
+      id <- cur_df$id
+      send0 <- ifelse(cur_df$RelSend == 1.0, 1, 0)
+      show_trust <- rep(ifelse(k > 2, 1, 0), length(send0))
+      show_id <- rep(ifelse (k %% 2 == 0, 1, 0), length (send0))
+      df0 <- rbind (df0,cbind(id, send0, show_trust, show_id))
+    }
+    df0 <- as.data.frame(df0)
+    df0$id <- as.factor(df0$id)
+    df0$send0 <- as.logical(df0$send0)
+    df0$show_trust <- as.logical (df0$show_trust)
+    df0$show_id <- as.logical (df0$show_id)
+    
+    g1 <- glm(send0 ~ id + show_trust+ show_id,family=binomial(link='logit'),data=df0)
+    print (summary (g1))
+    
+    # for (k in 1:num_games) {
+    #   cur_game <- as.data.frame(all_df[k])
+    #   print (paste("Analyze: ", Type_names[type+1], "for game:", GAME_NAMES[k]))
+    #   # print ("Residual on subject then multiple regression")
+    #   cur_game$id <- as.factor (cur_game$id)
+    #   cur_game <- cur_game [cur_game$my_trust_value != 0.5,]
+    #   cur_game$resid <- residuals(lm(RelSend~id, data=cur_game))
+    #   print (cor.test(cur_game$my_reputation, cur_game$my_trust_value))
+    #   print (cor.test(cur_game$partner_reputation, cur_game$trust_value))
+    #   if (type == 0) {
+    #     # l1 <- lm (RelSend ~ id + my_trust_value + trust_value, data = cur_game)
+    #     l1 <- lm (RelSend ~ my_trust_value + my_reputation + trust_value + partner_reputation, data=cur_game)
+    #     print (summary (l1))
+    #     # print (Anova(l1, type = "III"))
+    #   }
+    #   else if (type == 1) {
+    #     # l1 <- lm (RelSend ~ id + my_trust_value + trust_value, data = cur_game)
+    #     l1 <- lm (RelSend ~ my_trust_value + my_reputation + trust_value + partner_reputation + AbsPartnerSend, data = cur_game)
+    #     print (summary (l1))
+    #     # print (Anova(l1, type = "III"))
+    #   }
+    # }
+    
+    # plot trust score over time
+    plot(1, type="n", xlim=c(0, 10), ylim=c(0, 1), ylab = "Trust value", xlab = "Round number", main = paste(Type_names[type+1]))
     for (k in 1:num_games) {
       cur_game <- as.data.frame(all_df[k])
+      trusts <- c()
+      rounds <- c()
+      subject_ids <- c()
+      for (i in 2:5) {
+        trusts <- c(trusts, cur_game[cur_game$round_number_with_partner == i,]$my_trust_value)
+        rounds <- c(rounds, rep(i, length(cur_game[cur_game$round_number_with_partner == i,]$my_trust_value)))
+        subject_ids <- c (subject_ids, cur_game[cur_game$round_number_with_partner == i,]$id)
+      }
+      
+      
+      ldf <- as.data.frame(cbind (subject_ids, trusts, rounds))
+      agg_trust <- aggregate(ldf$trusts, list(ldf$rounds), mean)
+      lines (agg_trust, col = col_list[k], lty = k, type = "o")
+      ldf$subject_ids <- as.factor(ldf$subject_ids)
+      ldf$resid <- resid(lm(trusts~subject_ids, data = ldf))
+      ldf.lm <- lm (resid ~ rounds, data = ldf)
+      print (paste("Regression of resid trust score on round after elimiate subject effect of game:", GAME_NAMES[k], Type_names[type+1]))
+      print (summary (ldf.lm))
+    }
+    legend(x=6,y=1,lty=1:4,col = col_list[1:4], GAME_NAMES)
+  }
+  
+```
+
+\pagebreak
+
+##Predict send proportion based on trust scores
+
+```{r, echo = FALSE}
+  for (type in 0:1) {
+    df_simple <- data.frame ("id" = as.numeric(),
+                             "trust_value" = as.numeric(),
+                             "RelSend" = as.numeric(),
+                             "AbsSend" = as.numeric(),
+                             "response_time" = as.numeric(),
+                             "game_pos" = as.numeric(),
+                             "peak_end_trust" = as.numeric(),
+                             "AbsPartnerSend" = as.numeric(),
+                             "my_trust_value" = as.numeric(),
+                             "PartnerRelSend" = as.numeric(),
+                             "my_reputation" = as.numeric(),
+                             "partner_reputation" = as.numeric(),
+                             "round_number_with_partner" = as.numeric()  # indicate round number when play with a partner (1-5)
+                             )
+    df_id <- data.frame ("id" = as.numeric(),
+                         "trust_value" = as.numeric(),
+                         "RelSend" = as.numeric(),
+                         "AbsSend" = as.numeric(),
+                         "response_time" = as.numeric(),
+                         "game_pos" = as.numeric(),
+                         "peak_end_trust" = as.numeric(),
+                         "AbsPartnerSend" = as.numeric(),
+                          "my_trust_value" = as.numeric(),
+                         "PartnerRelSend" = as.numeric(),
+                          "my_reputation" = as.numeric(),
+                          "partner_reputation" = as.numeric(),
+                          "round_number_with_partner" = as.numeric()
+                         
+                         )
+    df_score <- data.frame ("id" = as.numeric(),
+                            "trust_value" = as.numeric(),
+                            "RelSend" = as.numeric(),
+                            "AbsSend" = as.numeric(),
+                            "response_time" = as.numeric(),
+                            "game_pos" = as.numeric(),
+                            "peak_end_trust" = as.numeric(),
+                            "AbsPartnerSend" = as.numeric(),
+                             "my_trust_value" = as.numeric(),
+                            "PartnerRelSend" = as.numeric(),
+                             "my_reputation" = as.numeric(),
+                             "partner_reputation" = as.numeric(),
+                             "round_number_with_partner" = as.numeric()
+                            )
+    df_combine <- data.frame ("id" = as.numeric(),
+                              "trust_value" = as.numeric(),
+                              "RelSend" = as.numeric(),
+                              "AbsSend" = as.numeric(),
+                              "response_time" = as.numeric(),
+                              "game_pos" = as.numeric(),
+                              "peak_end_trust" = as.numeric(),
+                              "AbsPartnerSend" = as.numeric(),
+                             "my_trust_value" = as.numeric(),
+                             "PartnerRelSend" = as.numeric(),
+                             "my_reputation" = as.numeric(),
+                             "partner_reputation" = as.numeric(),
+                             "round_number_with_partner" = as.numeric()
+                             )
+    for (exp_id in 1:num_exp) {
+      first_round_of_exp_subjects = (exp_id - 1) * num_rounds_per_game * num_users + 1
+      last_round_of_exp_subjects = exp_id * num_rounds_per_game * num_users
+      simple_game = simple_games[first_round_of_exp_subjects:last_round_of_exp_subjects,]
+      id_game = id_games [first_round_of_exp_subjects:last_round_of_exp_subjects,]
+      score_game = score_games [first_round_of_exp_subjects:last_round_of_exp_subjects,]
+      combine_game = combine_games[first_round_of_exp_subjects:last_round_of_exp_subjects,]
+      
+      all_game <- list (simple_game, id_game, score_game, combine_game)
+      
+      
+      for (k in 1:num_games) {
+        cur_game <- as.data.frame(all_game[k])
+        round_number_with_partners = c(0,0,0,0,0,0)
+        for (user_id in 1:num_users) {
+          cur_reputation = 0.5
+          partner_reputation = 0.5
+          for (i in 1:nrow(cur_game)) {
+            if (cur_game[i,]$Subject == user_id) {
+              partner_id <- cur_game[i,]$Partner
+              round_number_with_partners[partner_id] <- round_number_with_partners[partner_id] + 1
+              if (cur_game[i,]$my_send_proportional >= 0 & cur_game[i,]$Type == type) {
+                my_trust_score = cur_game[cur_game$Type == (1  - type) & cur_game$Partner == user_id 
+                                          & cur_game$Period == cur_game[i,]$Period,]$showing_trust_score
+                if (cur_game[i,]$Period %% 25 > 1 | cur_game[i,]$Period %% 25 == 0) {
+                  # calculate my reputation
+                  cur_period = cur_game[i,]$Period
+                  cur_reputation = mean (cur_game[cur_game$Subject == user_id 
+                                                  & cur_game$Period < cur_period
+                                                  & cur_game$my_send_proportional >= 0,]$my_send_proportional)
+                  if (is.nan(cur_reputation)) {
+                    cur_reputation = 0.5
+                  }
+                  
+                  # calculate partner reputation
+                  partner_id <- cur_game[i,]$Partner
+                  partner_reputation = mean (cur_game[cur_game$Subject == partner_id
+                                                  & cur_game$Period < cur_period
+                                                  & cur_game$my_send_proportional >= 0,]$my_send_proportional)
+                  if (is.nan (partner_reputation)) {
+                    partner_reputation = 0.5
+                  }
+                  
+                } else {
+                  cur_reputation = 0.5
+                  partner_reputation = 0.5
+                }
+                new_row = c((exp_id - 1) * num_users + user_id,
+                      (cur_game[i,]$showing_trust_score),
+                      (cur_game[i,]$my_send_proportional),
+                      (cur_game[i,]$Contribution),
+                      (cur_game[i,]$response_time),
+                      SIMPLE_GAME_ORDERS[exp_id],
+                       (calc_peak_end_trust(cur_game[i,]$showing_trust_score)),
+                      (cur_game[i,]$PartnerDecision),
+                      my_trust_score,
+                      (cur_game[i,]$send_proportion),
+                      cur_reputation,
+                      partner_reputation,
+                      ifelse (round_number_with_partners[partner_id] %% 5 == 0,5,round_number_with_partners[partner_id] %% 5)
+                      )
+                if (k == 1) {
+                    df_simple[nrow(df_simple) + 1,] <- new_row
+                } else if (k == 2) {
+                  df_id[nrow(df_id) + 1,] <- new_row
+                } else if (k == 3) {
+                  df_score[nrow(df_score) + 1,] <- new_row
+                } else if (k == 4) {
+                  df_combine[nrow(df_combine) + 1,] <- new_row
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    all_df <- list (df_simple, df_id, df_score, df_combine)
+    
+    require(MASS) #for variable selection
+    require(relaimpo)
+    
+    for (k in 1:num_games) {
+      cur_df <- as.data.frame(all_df[k])
       print (paste("Analyze: ", Type_names[type+1], "for game:", GAME_NAMES[k]))
       # print ("Residual on subject then multiple regression")
-      cur_game$id <- as.factor (cur_game$id)
-      cur_game <- cur_game [cur_game$my_trust_value != 0.5,]
-      cur_game$resid <- residuals(lm(RelSend~id, data=cur_game))
+      cur_df$id <- as.factor (cur_df$id)
+      cur_df <- cur_df [cur_df$round_number_with_partner != 1,]
+      cur_df$resid <- residuals(lm(RelSend~id, data=cur_df))
+      # print (cor.test(cur_df$resid, cur_df$my_trust_value))
+      # print (cor.test(cur_df$resid, cur_df$my_reputation))
+      # print (cor.test(cur_df$partner_reputation, cur_df$trust_value))
       if (type == 0) {
         # l1 <- lm (RelSend ~ id + my_trust_value + trust_value, data = cur_game)
-        l1 <- lm (RelSend ~ my_trust_value + my_reputation + trust_value + partner_reputation, data=cur_game)
+        l1 <- lm (resid ~ my_trust_value + my_reputation + trust_value + partner_reputation, data=cur_df)
         print (summary (l1))
         # print (Anova(l1, type = "III"))
+        
+        #variable selection
+        # print ("variable selection")
+        # steps <- MASS::stepAIC(l1)
+        # print (steps$anova)
+        
+        # variable importance
+        relimp <- calc.relimp(l1,type=c("lmg","last","first","pratt"),rela=TRUE)
+        print (relimp)
       }
       else if (type == 1) {
         # l1 <- lm (RelSend ~ id + my_trust_value + trust_value, data = cur_game)
-        l1 <- lm (RelSend ~ my_trust_value + my_reputation + trust_value + partner_reputatione + AbsPartnerSend, data = cur_game)
+        l1 <- lm (resid ~ my_trust_value + my_reputation + trust_value + partner_reputation + AbsPartnerSend, data = cur_df)
         print (summary (l1))
         # print (Anova(l1, type = "III"))
+        
+        #variable selection
+        # print ("variable selection")
+        # steps <- MASS::stepAIC(l1)
+        # print (steps$anova)
+        
+        # variable importance
+        relimp <- calc.relimp(l1,type=c("lmg","last","first","pratt"),rela=TRUE)
+        print (relimp)
       }
     }
   }
@@ -3507,7 +3708,7 @@ We will perform ANOVA without groupID.
               if (cur_game[i,]$my_send_proportional >= 0 & cur_game[i,]$Type == type) {
                 my_trust_score = cur_game[cur_game$Type == (1  - type) & cur_game$Partner == user_id 
                                           & cur_game$Period == cur_game[i,]$Period,]$showing_trust_score
-                if (cur_game[i,]$Period %% 25 > 1) {
+                if (cur_game[i,]$Period %% 25 > 1 | cur_game[i,]$Period %% 25 == 0) {
                   
                   # calculate my reputation
                   cur_period = cur_game[i,]$Period
@@ -3519,7 +3720,8 @@ We will perform ANOVA without groupID.
                   }
                   
                   # calculate partner reputation
-                  partner_reputation = mean (cur_game[cur_game$Partner == user_id 
+                  partner_id <- cur_game[i,]$Partner
+                  partner_reputation = mean (cur_game[cur_game$Subject == partner_id 
                                                   & cur_game$Period < cur_period
                                                   & cur_game$my_send_proportional >= 0,]$my_send_proportional)
                   if (is.nan (partner_reputation)) {
@@ -3759,8 +3961,6 @@ for (exp_id in 1:num_exp) {
 As the metric send_proportion/partner_trust does not say anything, we now display both send_proportion and partner_trust in one graph to check the stability of user behavior over time.
 
 ```{r, echo=FALSE}
-col_list <- c("red","green","blue","black","orange","violet")
-
 for (exp_id in 1:num_exp) {
       first_round_of_exp_subjects = (exp_id - 1) * num_rounds_per_game * num_users + 1
       last_round_of_exp_subjects = exp_id * num_rounds_per_game * num_users
