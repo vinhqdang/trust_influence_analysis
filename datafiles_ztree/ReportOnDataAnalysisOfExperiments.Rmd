@@ -3352,7 +3352,7 @@ Update on Thu 15-Jun-2017
     df0$show_trust <- as.logical (df0$show_trust)
     df0$show_id <- as.logical (df0$show_id)
     
-    g1 <- glm(send0 ~ id + show_trust+ show_id,family=binomial(link='logit'),data=df0)
+    g1 <- glm(send0 ~ id + show_trust+ show_id + show_trust * show_id,family=binomial(link='logit'),data=df0)
     print (summary (g1))
     
     print (paste("Number of sending >= 0.7 as:", Type_names[type+1]))
@@ -3386,7 +3386,7 @@ Update on Thu 15-Jun-2017
     df0$show_trust <- as.logical (df0$show_trust)
     df0$show_id <- as.logical (df0$show_id)
     
-    g1 <- glm(send0 ~ id + show_trust+ show_id,family=binomial(link='logit'),data=df0)
+    g1 <- glm(send0 ~ id + show_trust+ show_id + show_trust * show_id,family=binomial(link='logit'),data=df0)
     print (summary (g1))
     
     print (paste("Number of sending 1.0 (maximum) as:", Type_names[type+1]))
@@ -3420,7 +3420,7 @@ Update on Thu 15-Jun-2017
     df0$show_trust <- as.logical (df0$show_trust)
     df0$show_id <- as.logical (df0$show_id)
     
-    g1 <- glm(send0 ~ id + show_trust+ show_id,family=binomial(link='logit'),data=df0)
+    g1 <- glm(send0 ~ id + show_trust+ show_id + show_trust * show_id,family=binomial(link='logit'),data=df0)
     print (summary (g1))
     
     # for (k in 1:num_games) {
@@ -3547,7 +3547,6 @@ Update on Thu 15-Jun-2017
       
       all_game <- list (simple_game, id_game, score_game, combine_game)
       
-      
       for (k in 1:num_games) {
         cur_game <- as.data.frame(all_game[k])
         round_number_with_partners = c(0,0,0,0,0,0)
@@ -3619,44 +3618,71 @@ Update on Thu 15-Jun-2017
     require(relaimpo)
     
     for (k in 1:num_games) {
+      for (round_number in 2:5) {
+        cur_df <- as.data.frame(all_df[k])
+        print (paste("Analyze: ", Type_names[type+1], "for game:", GAME_NAMES[k]))
+        print (paste("ROUND:", round_number))
+        # print ("Residual on subject then multiple regression")
+        cur_df$id <- as.factor (cur_df$id)
+        cur_df <- cur_df [cur_df$round_number_with_partner == round_number,]
+        cur_df$resid <- residuals(lm(RelSend~id, data=cur_df))
+        # print (cor.test(cur_df$resid, cur_df$my_trust_value))
+        # print (cor.test(cur_df$resid, cur_df$my_reputation))
+        # print (cor.test(cur_df$partner_reputation, cur_df$trust_value))
+        if (type == 0) {
+          # l1 <- lm (RelSend ~ id + my_trust_value + trust_value, data = cur_game)
+          l1 <- lm (RelSend ~ my_trust_value + my_reputation + trust_value + partner_reputation, data=cur_df)
+          print (summary (l1))
+          # print (Anova(l1, type = "III"))
+          
+          #variable selection
+          print ("variable selection")
+          steps <- MASS::stepAIC(l1)
+          print (steps$anova)
+          
+          # variable importance
+          # relimp <- calc.relimp(l1,type=c("lmg","last","first","pratt"),rela=TRUE)
+          # print (relimp)
+        }
+        else if (type == 1) {
+          # l1 <- lm (RelSend ~ id + my_trust_value + trust_value, data = cur_game)
+          l1 <- lm (RelSend ~ my_trust_value + my_reputation + trust_value + partner_reputation + AbsPartnerSend, data = cur_df)
+          print (summary (l1))
+          # print (Anova(l1, type = "III"))
+          
+          #variable selection
+          print ("variable selection")
+          steps <- MASS::stepAIC(l1)
+          print (steps$anova)
+          
+          # variable importance
+          # relimp <- calc.relimp(l1,type=c("lmg","last","first","pratt"),rela=TRUE)
+          # print (relimp)
+        }
+      }
+    }
+    
+    for (k in 1:num_games) {
       cur_df <- as.data.frame(all_df[k])
       print (paste("Analyze: ", Type_names[type+1], "for game:", GAME_NAMES[k]))
+      print ("For  rounds 4 and 5")
       # print ("Residual on subject then multiple regression")
       cur_df$id <- as.factor (cur_df$id)
-      cur_df <- cur_df [cur_df$round_number_with_partner != 1,]
+      cur_df <- cur_df [cur_df$round_number_with_partner >= 4,]
       cur_df$resid <- residuals(lm(RelSend~id, data=cur_df))
       # print (cor.test(cur_df$resid, cur_df$my_trust_value))
       # print (cor.test(cur_df$resid, cur_df$my_reputation))
       # print (cor.test(cur_df$partner_reputation, cur_df$trust_value))
       if (type == 0) {
         # l1 <- lm (RelSend ~ id + my_trust_value + trust_value, data = cur_game)
-        l1 <- lm (resid ~ my_trust_value + my_reputation + trust_value + partner_reputation, data=cur_df)
+        l1 <- lm (RelSend ~ my_trust_value + trust_value, data=cur_df)
         print (summary (l1))
-        # print (Anova(l1, type = "III"))
-        
-        #variable selection
-        # print ("variable selection")
-        # steps <- MASS::stepAIC(l1)
-        # print (steps$anova)
-        
-        # variable importance
-        relimp <- calc.relimp(l1,type=c("lmg","last","first","pratt"),rela=TRUE)
-        print (relimp)
       }
       else if (type == 1) {
         # l1 <- lm (RelSend ~ id + my_trust_value + trust_value, data = cur_game)
-        l1 <- lm (resid ~ my_trust_value + my_reputation + trust_value + partner_reputation + AbsPartnerSend, data = cur_df)
+        # l1 <- lm (RelSend ~ my_trust_value  + trust_value*AbsPartnerSend, data = cur_df)
+        l1 <- lm (RelSend ~ my_trust_value  + trust_value + AbsPartnerSend, data = cur_df)
         print (summary (l1))
-        # print (Anova(l1, type = "III"))
-        
-        #variable selection
-        # print ("variable selection")
-        # steps <- MASS::stepAIC(l1)
-        # print (steps$anova)
-        
-        # variable importance
-        relimp <- calc.relimp(l1,type=c("lmg","last","first","pratt"),rela=TRUE)
-        print (relimp)
       }
     }
   }
