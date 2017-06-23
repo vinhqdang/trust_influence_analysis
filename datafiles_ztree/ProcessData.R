@@ -1707,21 +1707,37 @@ calcTrust <- function(send_amount)
   res
 }
 
-verifyTrustWithBravo <- function (file_name, round_number = 5) {
+verifyTrustWithBravo <- function (file_name, round_number = 5, type =0) {
   bravo <- read.csv (file = file_name)
   newID <- unique (bravo$newID)
+  
+  bravo$send_proportion <- ifelse(bravo$type == 1, bravo$daAaB/10, bravo$daBaA / 3 / bravo$actualDaAaB)
+  bravo$send_proportion <- ifelse(bravo$send_proportion > 1, 1, bravo$send_proportion)
   
   # Trust score before round 5 (last round) and action at round 5 of each sender
   last_action = data.frame ("pre_trust" = as.numeric(),
                             "action" = as.numeric())
-  for (id in newID) {
-    actions <- bravo[bravo$newID == id & !is.na(bravo$daAaB),]$daAaB / 10
+  
+  if (type == 0) {
+    for (id in newID) {
+      actions <- bravo[bravo$newID == id & !is.na(bravo$daAaB),]$send_proportion
       # actions <- bravo[bravo$newID == id & !is.na(bravo$daBaA),]$daBaA / 10
-    x <- calcTrust (actions)
-    
-    new_row <- c(x[(round_number - 1)], actions[round_number])
-    last_action[nrow(last_action) + 1,] <- new_row
+      x <- calcTrust (actions)
+      
+      new_row <- c(x[(round_number - 1)], actions[round_number])
+      last_action[nrow(last_action) + 1,] <- new_row
+    }
+  } else if (type == 1) {
+    for (id in newID) {
+      actions <- bravo[bravo$newID == id & !is.na(bravo$daBaA),]$send_proportion
+      actions <- actions [!is.na(actions)]
+      x <- calcTrust (actions)
+      
+      new_row <- c(x[(round_number - 1)], actions[round_number])
+      last_action[nrow(last_action) + 1,] <- new_row
+    }
   }
+  
   plot (x = last_action$pre_trust, y = last_action$action, xlab = paste("Trust score before round ", round_number), ylab = paste("Sending behavior in round ", round_number))
   lm1 <- lm (action ~ pre_trust, data = last_action)
   abline(lm1, col = "red")
@@ -1732,14 +1748,98 @@ verifyTrustWithBravo <- function (file_name, round_number = 5) {
 
 verifyTrustWithDubois <- function (file_name, type = 0, round = 5) {
   dubois <- read.csv("all_data/data_dubois.csv", sep = ";")
+  
+  # dubois$group <- dubois$group + dubois$treatment * 6
+  # dubois$player_uid <- dubois$player_uid + dubois$treatment * 36
+  # dubois$group <- as.factor(dubois$group)
+  # dubois$treatment <- as.factor(dubois$treatment)
+  # dubois$player_uid <- as.factor(dubois$player_uid)
+  # 
+  # user_sent <- as.vector (aggregate(dubois$sent, list(dubois$player_uid), mean)[,'x'])
+  # user_sent_back <- as.vector(aggregate(dubois$sent_back, list(dubois$player_uid), mean)[,'x'])
+  # user_reciprocity <- as.vector (aggregate(dubois$sent_back/dubois$received, list(dubois$player_uid), mean, na.rm = TRUE)[,'x'])
+  # user_sender_payoff <- as.vector(aggregate(dubois$returned - dubois$sent, list(dubois$player_uid), mean, na.rm = TRUE)[,'x'])
+  # user_receiver_payoff <- as.vector(aggregate(dubois$received - dubois$sent_back, list(dubois$player_uid), mean, na.rm = TRUE)[,'x'])
+  # treatment <- as.factor (c(rep(0,36), rep (1, 36), rep(2,36)))
+  # group <- as.factor (rep (1:18, each = 6))
+  
   dubois1 <- dubois[1:1080,]
+  
+  
   dubois1$trust <- ave(dubois1$sent/10, dubois1$player_uid, FUN = calcTrust)
   last_trust = dubois1[dubois1$period == (round - 1),]$trust
   last_action = dubois1[dubois1$period == round,]$sent/10
+  
+  if (type == 1) {
+    dubois1$send_back_pror <- ifelse(is.nan(dubois1$sent_back/dubois1$received), -1, dubois1$sent_back/dubois1$received)
+    # dubois1$trust <- ave (dubois1$sent_back_pror, dubois1$player_uid, FUN = calcTrust)
+    last_trust <- c()
+    for (uid in unique (dubois1$player_uid)) {
+      actions <- dubois1[dubois1$player_uid == uid,]$send_back_pror
+      trusts <- calcTrust(actions)
+      trust <- trusts [round - 1]
+      last_trust <- c(last_trust, trust)
+    }
+    last_action = dubois1[dubois1$period == round,]$send_back_pror
+  }
+  
+  last_trust <- last_trust [last_action >= 0]
+  last_action <- last_action [last_action >= 0]
+  
   plot (x = last_trust, y = last_action, xlab = paste("Trust score before round ", round), ylab = paste("Sending behavior in round ", round))
   lm2 <- lm(formula = last_action ~ last_trust)
   abline (lm2, col = "red")
   print (cor (last_action , last_trust))
+  print ("--")
+  print(summary (lm2))
+}
+
+verifyReputationWithDubois <- function (file_name, type = 0, round = 5) {
+  dubois <- read.csv("all_data/data_dubois.csv", sep = ";")
+  
+  dubois1 <- dubois[1:1080,]
+  
+  dubois1$send_back_pror <- ifelse(is.nan(dubois1$sent_back/dubois1$received), -1, dubois1$sent_back/dubois1$received)
+  last_action = dubois1[dubois1$period == round,]$sent/10
+  dubois_reputation <- c()
+  
+  for (i in 1:nrow(dubois1)) {
+    cur_id <- dubois1[i,]$player_uid
+    cur_rep <- 0.5
+    if (dubois1[i,]$period == 1) {
+      cur_rep <- 0.5
+    } else {
+      cur_rep <- mean (c(dubois1[dubois1$player_uid == cur_id,]$sent[1:(i-1)]/10, 
+                         dubois1[dubois1$send_back_pror >= 0 
+                         & dubois1$player_uid == cur_id,]$send_back_pror[1:(i-1)]), na.rm = TRUE)
+    }
+    dubois_reputation <- c(dubois_reputation, cur_rep)
+  }
+  
+  dubois1 <- cbind (dubois1, dubois_reputation)
+  
+  last_rep <- c()
+  
+  for (uid in unique (dubois1$player_uid)) {
+    actions <- dubois1[dubois1$player_uid == uid,]$send_back_pror
+    rep <- dubois1[dubois1$player_uid == uid,]$dubois_reputation[round -1]
+    last_rep <- c(last_rep, rep)
+  }
+  
+  if (type == 1) {
+    # dubois1$trust <- ave (dubois1$sent_back_pror, dubois1$player_uid, FUN = calcTrust)
+    
+    
+    last_action = dubois1[dubois1$period == round,]$send_back_pror
+  }
+  
+  last_rep <- last_rep [last_action >= 0]
+  last_action <- last_action [last_action >= 0]
+  
+  plot (x = last_rep, y = last_action, xlab = paste("Reputation score before round ", round), ylab = paste("Sending behavior in round ", round))
+  lm2 <- lm(formula = last_action ~ last_rep)
+  abline (lm2, col = "red")
+  print (cor (last_action , last_rep))
   print ("--")
   print(summary (lm2))
 }
