@@ -999,24 +999,24 @@ anova_random_subject <- function(input_df)
     print ("---------------------------------------------")
     print ("---------------------------------------------")
     
-    # print ("Without GroupID")
-    # anova_analysis(df, type, num_way = 4)
-    # 
-    # print ("---------------------------------------------")
-    # print ("---------------------------------------------")
-    
-    
+    print ("Without GroupID")
+    anova_analysis(df, type, num_way = 4)
+
+    print ("---------------------------------------------")
+    print ("---------------------------------------------")
+
+
     # date: Wed 7-Jun-2017
-    # print ("ANOVA analysis on arcsin transformation of send proportion")
-    # print ("Without GroupID")
-    # 
-    # df$score <- asin(df$RelSend)
-    # anova_analysis(df, type, num_way = 4)
-    # 
-    # print ("With GroupID")
-    # 
-    # df$score <- asin(df$RelSend)
-    # anova_analysis(df, type, num_way = 3)
+    print ("ANOVA analysis on arcsin transformation of send proportion")
+    print ("Without GroupID")
+
+    df$score <- asin(df$RelSend)
+    anova_analysis(df, type, num_way = 4)
+    #
+    print ("With GroupID")
+
+    df$score <- asin(df$RelSend)
+    anova_analysis(df, type, num_way = 3)
     
 #     print ("---")
 #     anova_analysis(df, type = type, num_way = 2)
@@ -3082,11 +3082,15 @@ Dependent measure: average send proportion by user (eliminate case 0 for receive
     x_simple <- aggregate(df_simple[,c(3,2,11,8,9,12)], list(df_simple$id), mean, na.rm = TRUE)
     # colnames(x_simple) <- c("grp","RelSend","my_reputation","trust_value","AbsPartnerSend","my_trust_value")
     if (type == 0) {
-      print (summary (lm (RelSend ~ my_reputation  + partner_reputation, data = x_simple)))
+      print (summary (lm (RelSend ~ partner_reputation, data = x_simple)))
+      print (summary (lm (RelSend ~ trust_value, data = x_simple)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value, data = x_simple)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value, data = x_simple)))
     } else {
-      print (summary (lm (RelSend ~ my_reputation + partner_reputation + AbsPartnerSend, data = x_simple)))
+      # print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_simple)))
+      # print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_simple)))
+      print (summary (lm (RelSend ~ partner_reputation, data = x_id)))
+      print (summary (lm (RelSend ~ trust_value, data = x_id)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_simple)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value + AbsPartnerSend, data = x_simple)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value * AbsPartnerSend, data = x_simple)))
@@ -3106,11 +3110,16 @@ Dependent measure: average send proportion by user (eliminate case 0 for receive
     x_id <- aggregate(df_id[,c(3,2,11,8,9,12)], list(df_id$id), mean, na.rm = TRUE)
     # colnames(x_id) <- c("grp","RelSend","my_reputation","trust_value","AbsPartnerSend","my_trust_value")
     if (type == 0) {
-      print (summary (lm (RelSend ~ my_reputation + partner_reputation, data = x_id)))
+      # 26-Jun-2017: remove my_reputation value because in fact it is the RelSend in some sense
+      print (summary (lm (RelSend ~ partner_reputation, data = x_id)))
+      print (summary (lm (RelSend ~ trust_value, data = x_id)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value, data = x_id)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value, data = x_id)))
     } else {
-      print (summary (lm (RelSend ~ my_reputation + partner_reputation + AbsPartnerSend, data = x_id)))
+      # print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_id)))
+      # print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_id)))
+      print (summary (lm (RelSend ~ partner_reputation, data = x_id)))
+      print (summary (lm (RelSend ~ trust_value, data = x_id)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_id)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value + AbsPartnerSend, data = x_id)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value * AbsPartnerSend, data = x_id)))
@@ -3129,11 +3138,15 @@ Dependent measure: average send proportion by user (eliminate case 0 for receive
     x_score <- aggregate(df_score[,c(3,2,11,8,9,12)], list(df_score$id), mean, na.rm = TRUE)
     # colnames(x_score) <- c("grp","RelSend","my_reputation","trust_value","AbsPartnerSend","my_trust_value")
     if (type == 0) {
-      print (summary (lm (RelSend ~ my_reputation +  partner_reputation, data = x_score)))
+      print (summary (lm (RelSend ~ partner_reputation, data = x_score)))
+      print (summary (lm (RelSend ~ trust_value, data = x_score)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value, data = x_score)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value, data = x_score)))
     } else {
-      print (summary (lm (RelSend ~ my_reputation +  partner_reputation + AbsPartnerSend, data = x_score)))
+      # print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_score)))
+      # print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_score)))
+      print (summary (lm (RelSend ~ partner_reputation, data = x_score)))
+      print (summary (lm (RelSend ~ trust_value, data = x_score)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_score)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value + AbsPartnerSend, data = x_score)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value * AbsPartnerSend, data = x_score)))
@@ -3153,11 +3166,15 @@ Dependent measure: average send proportion by user (eliminate case 0 for receive
     x_combine <- aggregate(df_combine[,c(3,2,11,8,9,12)], list(df_combine$id), mean, na.rm = TRUE)
     # colnames(x_combine) <- c("grp","RelSend","my_reputation","trust_value","AbsPartnerSend","my_trust_value")
     if (type == 0) {
-      print (summary (lm (RelSend ~ my_reputation  + partner_reputation, data = x_combine)))
+      print (summary (lm (RelSend ~ partner_reputation, data = x_combine)))
+      print (summary (lm (RelSend ~ trust_value, data = x_combine)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value , data = x_combine)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value , data = x_combine)))
     } else {
-      print (summary (lm (RelSend ~ my_reputation  + partner_reputation + AbsPartnerSend, data = x_combine)))
+      # print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_combine)))
+      # print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_combine)))
+      print (summary (lm (RelSend ~ partner_reputation, data = x_combine)))
+      print (summary (lm (RelSend ~ trust_value, data = x_combine)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_combine)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value + AbsPartnerSend, data = x_combine)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value * AbsPartnerSend, data = x_combine)))
@@ -3800,6 +3817,14 @@ for (type in 0:1) {
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = df_round5)))
       print (summary (lm (RelSend ~ my_reputation + partner_reputation + AbsPartnerSend, data = df_round5)))
       
+      if (k == 4) {
+        # Date: Mon 26-Jun-2017
+        # Remove two cases in Receiver Combine game where they sent back 1.0
+        print ("Predict without subject ID 2 and 6 because they sent back outlier (1.0)")
+        print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = df_round5[df_round5$id != 2 & df_round5$id != 6,])))
+        print (summary (lm (RelSend ~ my_reputation + partner_reputation + AbsPartnerSend, data = df_round5[df_round5$id != 2 & df_round5$id != 6,])))
+      }
+      
       print ("Predict for high variance")
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = df_round5[df_round5$id %in% high_ids,])))
       print (summary (lm (RelSend ~ my_reputation + partner_reputation + AbsPartnerSend, data = df_round5[df_round5$id %in% high_ids,])))
@@ -3808,6 +3833,79 @@ for (type in 0:1) {
       # df_round5 <- cur_df [cur_df$round_number_with_partner == 5,]
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = df_round5[df_round5$id %in% low_ids,])))
       print (summary (lm (RelSend ~ my_reputation + partner_reputation + AbsPartnerSend, data = df_round5[df_round5$id %in% low_ids,])))
+    }
+  }
+}
+```
+
+\pagebreak
+
+## Compare the variance between game
+
+Date: Mon 26-Jun-2017
+
+When we divided the data to high variance and low variance users, only Receiver - Score Game is strange. In other cases, trust is a better predictive model in high variance section while reputation is a better one in low variance part.
+
+In this analysis, I use F-test to compare variance between game.
+
+```{r,echo=FALSE}
+
+for (type in 0:1) {
+  print (paste ("Type:", Type_names[type+1]))
+  all_df <- all_df_sender
+  if (type == 1) {
+    all_df <- all_df_receiver
+  }
+  
+  all_vars <- c()
+  
+  # collect variance of each game
+  for (k in 1:num_games) {
+    cur_df <- as.data.frame(all_df[k])
+    # cur_df <- rbind (as.data.frame(all_df_sender[k]), as.data.frame(all_df_receiver[k]))
+    
+    sends <- c()
+    ids <- c()
+    vars <- c()
+    for (user_id in 1:30) {
+      for (partner_id in 1:5) {
+        this_sends <- c()
+        this_pair <- cur_df[cur_df$id == user_id 
+                        & cur_df$partner_id == partner_id,]
+        if (nrow(this_pair) >= 1) {
+          this_sends <- c(this_sends, this_pair$RelSend)
+          # print (var (this_pair$RelSend))
+          sends <- c(sends, mean (this_sends))
+          ids <- c(ids, user_id)
+        }
+      }
+    }
+    
+    send_df <- as.data.frame(cbind (ids, sends))
+    vars <- aggregate(send_df$sends, list(send_df$ids), var)
+    vars [is.na(vars)] <- 0
+    
+    all_vars <- c(all_vars, as.vector(vars$x))
+  }
+  
+  # compare variance by F-test
+  # create groups id
+  require(PairedData)
+  groups <- c(rep(1,30), rep(2,30), rep(3,30), rep(4,30))
+  groups <- as.factor(groups)
+  for (k in 1:num_games) {
+    for (j in (k+1):num_games) {
+      if (k < j & j <= 4) {
+        # print (paste (k, "----", j))
+        print (paste("Compare variance between", GAME_NAMES[k], "and", GAME_NAMES[j]))
+        x1 <- all_vars[((k-1)*30 + 1):(k*30)]
+        x2 <- all_vars[((j-1)*30 + 1):(j*30)]
+        # print (var.test(all_vars[((k-1)*30 + 1):(k*30)], all_vars[((j-1)*30 + 1):(j*30)], paired = FALSE))
+        # print (PairedData::var.test.paired(x1, x2))
+        print (var.test(x1,x2, paired=TRUE))
+        print ("Fligner test")
+        print (fligner.test(c(x1,x2) ~ c(rep(k,30), rep (j,30))))
+      }
     }
   }
 }
@@ -5933,6 +6031,8 @@ Analyze group effect of Dubois's data
   }
 ```
 
+
+\pagebreak
 
 ```{r}
 # Plot send proportion for three datasets

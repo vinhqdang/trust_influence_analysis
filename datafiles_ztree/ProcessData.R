@@ -1739,7 +1739,7 @@ verifyReputationWithBravo <- function (file_name = "all_data/Data2.csv", round_n
     for (id in newID) {
       actions <- bravo[bravo$newID == id & !is.na(bravo$daBaA),]$send_proportion
       actions <- actions [!is.na(actions)]
-      x <- calcTrust (actions)
+      x <- calcReputation (actions)
       
       new_row <- c(x[(round_number - 1)], actions[round_number])
       last_action[nrow(last_action) + 1,] <- new_row
@@ -1754,7 +1754,7 @@ verifyReputationWithBravo <- function (file_name = "all_data/Data2.csv", round_n
   print (summary (lm1))
 }
 
-verifyTrustWithBravo <- function (file_name, round_number = 5, type =0) {
+verifyTrustWithBravo <- function (file_name= "all_data/Data2.csv", round_number = 5, type =0) {
   bravo <- read.csv (file = file_name)
   newID <- unique (bravo$newID)
   
