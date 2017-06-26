@@ -1707,6 +1707,53 @@ calcTrust <- function(send_amount)
   res
 }
 
+calcReputation <- function (send_proportion_list) {
+  res <- c()
+  for (i in 1:length(send_proportion_list)) {
+    res <- c(res, mean (send_proportion_list[1:i]))
+  }
+  res
+}
+
+verifyReputationWithBravo <- function (file_name = "all_data/Data2.csv", round_number = 5, type =0) {
+  bravo <- read.csv (file = file_name)
+  newID <- unique (bravo$newID)
+  
+  bravo$send_proportion <- ifelse(bravo$type == 1, bravo$daAaB/10, bravo$daBaA / 3 / bravo$actualDaAaB)
+  bravo$send_proportion <- ifelse(bravo$send_proportion > 1, 1, bravo$send_proportion)
+  
+  # Trust score before round 5 (last round) and action at round 5 of each sender
+  last_action = data.frame ("pre_trust" = as.numeric(),
+                            "action" = as.numeric())
+  
+  if (type == 0) {
+    for (id in newID) {
+      actions <- bravo[bravo$newID == id & !is.na(bravo$daAaB),]$send_proportion
+      # actions <- bravo[bravo$newID == id & !is.na(bravo$daBaA),]$daBaA / 10
+      x <- calcReputation (actions)
+      
+      new_row <- c(x[(round_number - 1)], actions[round_number])
+      last_action[nrow(last_action) + 1,] <- new_row
+    }
+  } else if (type == 1) {
+    for (id in newID) {
+      actions <- bravo[bravo$newID == id & !is.na(bravo$daBaA),]$send_proportion
+      actions <- actions [!is.na(actions)]
+      x <- calcTrust (actions)
+      
+      new_row <- c(x[(round_number - 1)], actions[round_number])
+      last_action[nrow(last_action) + 1,] <- new_row
+    }
+  }
+  
+  plot (x = last_action$pre_trust, y = last_action$action, xlab = paste("Trust score before round ", round_number), ylab = paste("Sending behavior in round ", round_number))
+  lm1 <- lm (action ~ pre_trust, data = last_action)
+  abline(lm1, col = "red")
+  print (cor (last_action$pre_trust , last_action$action))
+  print ("---")
+  print (summary (lm1))
+}
+
 verifyTrustWithBravo <- function (file_name, round_number = 5, type =0) {
   bravo <- read.csv (file = file_name)
   newID <- unique (bravo$newID)
@@ -1806,12 +1853,14 @@ verifyReputationWithDubois <- function (file_name, type = 0, round = 5) {
   for (i in 1:nrow(dubois1)) {
     cur_id <- dubois1[i,]$player_uid
     cur_rep <- 0.5
-    if (dubois1[i,]$period == 1) {
+    cur_period <- dubois1[i,]$period
+    if (cur_period == 1) {
       cur_rep <- 0.5
     } else {
-      cur_rep <- mean (c(dubois1[dubois1$player_uid == cur_id,]$sent[1:(i-1)]/10, 
-                         dubois1[dubois1$send_back_pror >= 0 
-                         & dubois1$player_uid == cur_id,]$send_back_pror[1:(i-1)]), na.rm = TRUE)
+      x <- dubois1[dubois1$player_uid == cur_id,]$send_back_pror[1:(cur_period-1)]
+      x <- x[x>=0]
+      cur_rep <- mean (c(dubois1[dubois1$player_uid == cur_id,]$sent[1:(cur_period-1)]/10, 
+                         x, na.rm = TRUE))
     }
     dubois_reputation <- c(dubois_reputation, cur_rep)
   }

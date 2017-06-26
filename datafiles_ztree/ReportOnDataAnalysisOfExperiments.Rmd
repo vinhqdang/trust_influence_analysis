@@ -3750,6 +3750,8 @@ for (k in 1:num_games) {
 }
 ```
 
+### Scatter plot by role
+
 Repeat the above analysis, but separate role
 
 ```{r,echo=FALSE}
@@ -3770,18 +3772,43 @@ for (type in 0:1) {
     vars <- c()
     for (user_id in 1:30) {
       for (partner_id in 1:5) {
+        this_sends <- c()
         this_pair <- cur_df[cur_df$id == user_id 
                         & cur_df$partner_id == partner_id,]
         if (nrow(this_pair) >= 1) {
-          sends <- c(sends, mean (this_pair$RelSend))
-          ids <- c(ids, user_id)
-          vars <- c(vars, var (this_pair$RelSend))
+          this_sends <- c(this_sends, this_pair$RelSend)
           # print (var (this_pair$RelSend))
+          sends <- c(sends, mean (this_sends))
+          ids <- c(ids, user_id)
         }
       }
     }
-    print (paste ("Mean of variance:", mean (vars[vars>0], na.rm = TRUE)))
+    # print (paste ("Mean of variance:", mean (vars[vars > 0], na.rm = TRUE)))
     plot (sends ~ ids, ylim = c(0,1), ylab = "Send proportion", xlab= "Subject ID", main = paste(GAME_NAMES[k],":", Type_names[type+1]))
+    
+    send_df <- as.data.frame(cbind (ids, sends))
+    vars <- aggregate(send_df$sends, list(send_df$ids), var)
+    vars [is.na(vars)] <- 0
+    # meanwhile focus on receiver only because the result for sender is already good
+    if (type == 1) {
+      high_ids <- vars[vars$x >= median(vars$x),]$Group.1
+      low_ids <- vars[vars$x < median(vars$x),]$Group.1
+      
+      df_round5 <- cur_df [cur_df$round_number_with_partner == 5,]
+      
+      print ("Predict for all")
+      print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = df_round5)))
+      print (summary (lm (RelSend ~ my_reputation + partner_reputation + AbsPartnerSend, data = df_round5)))
+      
+      print ("Predict for high variance")
+      print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = df_round5[df_round5$id %in% high_ids,])))
+      print (summary (lm (RelSend ~ my_reputation + partner_reputation + AbsPartnerSend, data = df_round5[df_round5$id %in% high_ids,])))
+      
+      print ("Predict for low variance")
+      # df_round5 <- cur_df [cur_df$round_number_with_partner == 5,]
+      print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = df_round5[df_round5$id %in% low_ids,])))
+      print (summary (lm (RelSend ~ my_reputation + partner_reputation + AbsPartnerSend, data = df_round5[df_round5$id %in% low_ids,])))
+    }
   }
 }
 ```
