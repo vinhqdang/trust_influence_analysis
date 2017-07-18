@@ -3087,8 +3087,8 @@ Dependent measure: average send proportion by user (eliminate case 0 for receive
       print (summary (lm (RelSend ~ my_trust_value + trust_value, data = x_simple)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value, data = x_simple)))
     } else {
-      # print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_simple)))
-      # print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_simple)))
+      print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_simple)))
+      print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_simple)))
       print (summary (lm (RelSend ~ partner_reputation, data = x_id)))
       print (summary (lm (RelSend ~ trust_value, data = x_id)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_simple)))
@@ -3116,8 +3116,8 @@ Dependent measure: average send proportion by user (eliminate case 0 for receive
       print (summary (lm (RelSend ~ my_trust_value + trust_value, data = x_id)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value, data = x_id)))
     } else {
-      # print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_id)))
-      # print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_id)))
+      print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_id)))
+      print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_id)))
       print (summary (lm (RelSend ~ partner_reputation, data = x_id)))
       print (summary (lm (RelSend ~ trust_value, data = x_id)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_id)))
@@ -3143,8 +3143,8 @@ Dependent measure: average send proportion by user (eliminate case 0 for receive
       print (summary (lm (RelSend ~ my_trust_value + trust_value, data = x_score)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value, data = x_score)))
     } else {
-      # print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_score)))
-      # print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_score)))
+      print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_score)))
+      print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_score)))
       print (summary (lm (RelSend ~ partner_reputation, data = x_score)))
       print (summary (lm (RelSend ~ trust_value, data = x_score)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_score)))
@@ -3171,8 +3171,8 @@ Dependent measure: average send proportion by user (eliminate case 0 for receive
       print (summary (lm (RelSend ~ my_trust_value + trust_value , data = x_combine)))
       print (summary (lm (RelSend ~ my_trust_value * trust_value , data = x_combine)))
     } else {
-      # print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_combine)))
-      # print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_combine)))
+      print (summary (lm (RelSend ~ partner_reputation + AbsPartnerSend, data = x_combine)))
+      print (summary (lm (RelSend ~ trust_value + AbsPartnerSend, data = x_combine)))
       print (summary (lm (RelSend ~ partner_reputation, data = x_combine)))
       print (summary (lm (RelSend ~ trust_value, data = x_combine)))
       print (summary (lm (RelSend ~ my_trust_value + trust_value + AbsPartnerSend, data = x_combine)))
