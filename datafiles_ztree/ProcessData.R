@@ -1893,8 +1893,8 @@ verifyReputationWithDubois <- function (file_name, type = 0, round = 5) {
   print(summary (lm2))
 }
 
-verifyTrustWithDuboisSimple <- function (file_name, type = 0, round = 5) {
-  dubois <- read.csv("all_data/data_dubois.csv", sep = ";")
+verifyTrustWithDuboisSimple <- function (file_name = "all_data/data_dubois.csv", type = 0, round = 5) {
+  dubois <- read.csv(file_name, sep = ";")
   dubois1 <- dubois[1:1080,]
   last_trust = c()
   for (uid in unique (dubois1$player_uid)) {

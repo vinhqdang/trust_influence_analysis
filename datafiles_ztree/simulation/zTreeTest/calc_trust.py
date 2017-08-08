@@ -119,6 +119,21 @@ def test3 ():
 	pylab.savefig ("1.png")
 	pylab.clf ()
 
+def test4():
+	pylab.plot ([0]*10)
+	axes = pylab.gca()
+	axes.set_ylim ([0,1])
+	pylab.xlabel ('Round number')
+	pylab.ylabel ('Trust score')
+	x = [x / 10.0 for x in range(1,11)]
+	pylab.plot (calcTrust (x, ROUNDS = 10), linestyle = "--",label = "Increasing sending proportion overtime")
+	x = [x / 10.0 for x in list(reversed(range(1,11)))]
+	pylab.plot (calcTrust (x, ROUNDS = 10), linestyle = ":", label = "Decreasing sending proportion overtime")
+	pylab.legend ()
+	pylab.show ()
+
+test4()
+
 # test the data of Claudia Keser (2002)
 def test_claudia_keser ():
 	print ("Simulating Keser experiments")
