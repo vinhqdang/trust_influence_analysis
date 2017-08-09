@@ -1715,6 +1715,85 @@ calcReputation <- function (send_proportion_list) {
   res
 }
 
+verifyCBDTwithBravo <- function (file_name = "all_data/Data2.csv", round_number = 5, type =0, p_recall = 0.75) {
+  bravo <- read.csv (file = file_name)
+  newID <- unique (bravo$newID)
+  
+  bravo$send_proportion <- ifelse(bravo$type == 1, bravo$daAaB/10, bravo$daBaA / 3 / bravo$actualDaAaB)
+  bravo$send_proportion <- ifelse(bravo$send_proportion > 1, 1, bravo$send_proportion)
+  
+  # store the best memory before this round and the behavior of this round
+  last_action = data.frame ("pre_trust" = as.numeric(),
+                            "action" = as.numeric())
+  
+  if (type == 0) {
+    for (id in newID) {
+      actions <- bravo[bravo$newID == id & !is.na(bravo$daAaB),]$send_proportion
+      # actions <- bravo[bravo$newID == id & !is.na(bravo$daBaA),]$daBaA / 10
+      
+      # looking for max benefit so far
+      max_payoff <- 0
+      max_payoff_id <- 0
+      for (i in 1:nrow(bravo)) {
+        if (bravo$newID[i] == id & !is.na(bravo$daAaB[i])) {
+          r <- runif (1, min = 0, max = 1)
+          if (r <= p_recall) {
+            cur_payoff <- bravo$actualDaBaA[i] - bravo$daAaB[i]
+            if (cur_payoff > max_payoff) {
+              max_payoff <- cur_payoff
+              max_payoff_id <- i
+            }
+          }
+        }
+      }
+      
+      x <- 0.5  # default if could not find any good memory
+      if (max_payoff_id >= 1) {
+        x <- bravo$daAaB [max_payoff_id] / 10
+      }
+      
+      new_row <- c(x, actions[round_number])
+      last_action[nrow(last_action) + 1,] <- new_row
+    }
+  } else if (type == 1) {
+    for (id in newID) {
+      actions <- bravo[bravo$newID == id & !is.na(bravo$daAaB),]$send_proportion
+      # actions <- bravo[bravo$newID == id & !is.na(bravo$daBaA),]$daBaA / 10
+      
+      # looking for max benefit so far
+      max_payoff <- 0
+      max_payoff_id <- 0
+      for (i in 1:nrow(bravo)) {
+        if (bravo$newID[i] == id & !is.na(bravo$daBaA[i])) {
+          r <- runif (1, min = 0, max = 1)
+          if (r <= p_recall) {
+            cur_payoff <- bravo$actualDaBaA[i] * 3 - bravo$daBaA[i]
+            if (cur_payoff > max_payoff) {
+              max_payoff <- cur_payoff
+              max_payoff_id <- i
+            }
+          }
+        }
+      }
+      
+      x <- 0.5  # default if could not find any good memory
+      if (max_payoff_id >= 1) {
+        x <- bravo$daAaB [max_payoff_id] / 10
+      }
+      
+      new_row <- c(x, actions[round_number])
+      last_action[nrow(last_action) + 1,] <- new_row
+    }
+  }
+  
+  plot (x = last_action$pre_trust, y = last_action$action, xlab = paste("CBDT prediction"), ylab = paste("Sending behavior"))
+  lm1 <- lm (action ~ pre_trust, data = last_action)
+  abline(lm1, col = "red")
+  print (cor (last_action$pre_trust , last_action$action))
+  print ("---")
+  print (summary (lm1))
+}
+
 verifyReputationWithBravo <- function (file_name = "all_data/Data2.csv", round_number = 5, type =0) {
   bravo <- read.csv (file = file_name)
   newID <- unique (bravo$newID)
