@@ -4248,7 +4248,7 @@ library (caret)
 # Date: 9-Aug-2017
 # Study the change of CBDT predictive power
 type <- 0
-k <- 1
+k <- 1  # Game ID (1..4)
 
 SHOW_TRUST = ifelse((k == 1 | k == 2),0,1)
 SHOW_ID = ifelse((k==1 | k == 3), 0, 1)
@@ -4272,6 +4272,23 @@ plot (results$r_cbdt ~ p_recalls, type = "o", ylim = c(0,1), col = col_list[1])
 lines (results$rmse_cbdt ~ p_recalls, type = "o", col = col_list[2])
 
 legend(x=0.8, y = 1, col = col_list[1:2], lty =c(1,1), c("R2", "RMSE"))
+```
+
+Now we perform CBDT prediction for all types (sender / receiver) in all games
+
+```{r, echo=FALSE}
+for (type in 0:1) {
+  for (k in 1:4) {
+    print (paste ("CBDT prediction for:", Type_names[type+1], " in game:", GAME_NAMES[k]))
+    SHOW_TRUST = ifelse((k == 1 | k == 2),0,1)
+    SHOW_ID = ifelse((k==1 | k == 3), 0, 1)
+    res <- CBDT_predict(cur_df = as.data.frame(all_df_sender[k]), p_recall = .5, type = type, 
+                      show_trust = SHOW_TRUST, show_id = SHOW_ID,
+                      round_number = 5)
+    print ("   ----    ")
+    
+  }
+}
 ```
 
 ##Compare the effect of nick-name and trust score
