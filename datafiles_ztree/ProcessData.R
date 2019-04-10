@@ -10,20 +10,20 @@ if (!require(zTree)) {
 library (zTree)
 
 signif_level <- function (F_value, df1, df2) {
-  res = ifelse(F_value >= qf(0.999, df1 = df1, df2 = df2), "***",
+  res = ifelse(F_value >= qf(0.999, df1 = df1, df2 = df2), "***", #qf means quantile
                ifelse (F_value >= qf(0.99, df1 = df1, df2 = df2), "**",
                        ifelse(F_value >= qf(0.95, df1 = df1, df2 = df2), "*",
                               ifelse (F_value >= qf(0.90, df1 = df1, df2 = df2), ".", " "))))
 }
 
-pop.var <- function(x) var(x, na.rm = TRUE) * (length(x)-1) / length(x)
+pop.var <- function(x) var(x, na.rm = TRUE) * (length(x)-1) / length(x) #Unbiaised variance 
 
-pop.sd <- function(x) {
+pop.sd <- function(x) {  #Standard deviation
   if (length(x) == 0) {
     0
   }
   else {
-    if (is.na(sqrt(pop.var(x)))) {
+    if (is.na(sqrt(pop.var(x)))) { #deals with "NA" case
       0
     } else {
       sqrt(pop.var(x))
@@ -58,7 +58,7 @@ extractSubjectsData <- function (ZTT) {
 
 getSubjects <- function (XLS_filename) {
   s <- loadZTree (XLS_filename)[2]$subjects
-  names (s) <- sub ('\\]', "", names (s))
+  names (s) <- sub ('\\]', "", names (s)) #replace \\] with "" in the subjects names
   names (s) <- sub ('\\[', "", names (s))
   s
 }
